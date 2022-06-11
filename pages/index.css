@@ -1,0 +1,32 @@
+@import url(../vendor/normalize.css);
+@import url(../vendor/fonts.css);
+
+/* Page styles */
+@import url(../blocks/page/page.css);
+
+/* Header Section Styles */
+@import url(../blocks/header/header.css);
+@import url(../blocks/header/__logo/header__logo.css);
+
+/* Profile Section Styles */
+@import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__avatar/profile__avatar.css);
+@import url(../blocks/profile/__info/profile__info.css);
+@import url(../blocks/profile/__nameButtonContainer/profile__nameButtonContainer.css);
+@import url(../blocks/profile/__name/profile__name.css);
+@import url(../blocks/profile/__editButton/profile__editButton.css);
+@import url(../blocks/profile/__description/profile__description.css);
+@import url(../blocks/profile/__addButton/profile__addButton.css);
+
+/* Elements Section Styles */
+@import url(../blocks/elements/elements.css);
+@import url(../blocks/elements/__element/elements__element.css);
+@import url(../blocks/elements/__image/elements__image.css);
+@import url(../blocks/elements/__group/elements__group.css);
+@import url(../blocks/elements/__name/elements__name.css);
+@import url(../blocks/elements/__likeButton/elements__likeButton.css);
+@import url(../blocks/elements/__likeButtonIcon/elements__likeButtonIcon.css);
+
+/* Footer Section Styles */
+@import url(../blocks/footer/footer.css);
+@import url(../blocks/footer/__text/footer__text.css);

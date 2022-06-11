@@ -1,0 +1,11 @@
+.profile__nameButtonContainer{
+    color: white;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 691px) {
+    .profile__nameButtonContainer{
+        justify-content: center;
+    }
+}
