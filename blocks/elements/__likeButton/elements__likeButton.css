@@ -9,6 +9,9 @@
     align-self: center;
     border: none;
     background-image: url(../../../images/likeButtonIcon.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 22px 19px;
 }
 
 .elements__likeButton:hover{
