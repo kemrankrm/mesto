@@ -5,6 +5,11 @@
     align-self: flex-end;
 }
 
+.popup__closeButton:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}
+
 @media screen and (max-width: 618px) {
     .popup__closeButton{
         width: 20px;

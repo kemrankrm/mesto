@@ -8,6 +8,7 @@
     letter-spacing: 0em;
     text-align: left;
     border: none;
+    border-radius: 0;
     border-bottom: 1px solid #000000;
     margin: 0 0 30px;
     box-sizing: border-box;
