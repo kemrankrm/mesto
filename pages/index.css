@@ -7,7 +7,6 @@
 /* Header Section Styles */
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
-@import url(../blocks/header/__line/header__line.css);
 
 /* Profile Section Styles */
 @import url(../blocks/profile/profile.css);
@@ -44,3 +43,4 @@
 @import url(../blocks/popup/__submitButton/popup__submitButton.css);
 @import url(../blocks/popup/__closeButton/popup__closeButton.css);
 @import url(../blocks/popup/__overlay/popup__overlay.css);
+@import url(../blocks/popup/__line/popup__line.css);

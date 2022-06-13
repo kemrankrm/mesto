@@ -1,6 +1,6 @@
 .popup__input-job{
     max-width: 358px;
-    height: 27px;
+    height: 26px;
     font-family: Inter;
     font-size: 14px;
     font-weight: 400;
@@ -9,8 +9,7 @@
     text-align: left;
     border: none;
     border-radius: 0;
-    border-bottom: 1px solid #000000;
-    margin: 0;
+    margin: 30px 0 0;
     box-sizing: border-box;
     padding: 0;
 }
