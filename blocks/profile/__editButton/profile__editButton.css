@@ -20,6 +20,8 @@
     .profile__editButton{
         margin: 0;
         align-self: center;
+        position: absolute;
+        right: 8px;
     }
 }
 

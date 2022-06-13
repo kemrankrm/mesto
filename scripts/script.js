@@ -8,16 +8,10 @@ let jobInput = document.querySelector('.popup__input-job');
 let profileName = document.querySelector('.profile__name');
 let profileJob = document.querySelector('.profile__description');
 
-
-console.log(nameInput.value);
-console.log(jobInput.value);
-console.log(profileName.textContent);
-console.log(profileJob.textContent);
-
 // Event Listeners
 editButton.addEventListener('click', formOpen);
 formElementClose.addEventListener('click', formClose);
-formSubmitButton.addEventListener('click', formSubmitHandler); 
+formSubmitButton.addEventListener('click', formSubmitHandler);
 
 // Functions
 function formOpen(){

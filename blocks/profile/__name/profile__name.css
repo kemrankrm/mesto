@@ -8,6 +8,7 @@
     line-height: 48px;
     letter-spacing: 0em;
     text-align: left;
+    max-width: 350px;
 }
 
 @media screen and (max-width: 691px) {
@@ -20,5 +21,7 @@
     .profile__name{
         font-size: 27px;
         line-height: 33px;
+        max-width: 190px;
+        margin: 0;
     }
 }
