@@ -1,12 +1,16 @@
 // Variables
-let editButton = document.querySelector('.profile__editButton');
+let editButton = document.querySelector('.profile__edit-button');
 let formElement = document.querySelector('.popup');
-let formElementClose = document.querySelector('.popup__closeButton');
-let formSubmitButton = document.querySelector('.popup__submitButton');
-let nameInput = document.querySelector('.popup__input-name');
-let jobInput = document.querySelector('.popup__input-job');
+let formElementClose = document.querySelector('.popup__close-button');
+let formSubmitButton = document.querySelector('.popup__submit-button');
+let nameInput = document.querySelector('.popup__input_name');
+let jobInput = document.querySelector('.popup__input_job');
 let profileName = document.querySelector('.profile__name');
 let profileJob = document.querySelector('.profile__description');
+
+// Input Values setup
+nameInput.value = profileName.textContent;
+jobInput.value = profileJob.textContent;
 
 // Event Listeners
 editButton.addEventListener('click', formOpen);
