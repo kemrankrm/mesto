@@ -1,0 +1,9 @@
+.popup-new-place__container{
+    max-width: 430px;
+}
+
+@media screen and (min-width: 619px) {
+    .popup-new-place__container{
+        min-width: 430px;
+    }
+}

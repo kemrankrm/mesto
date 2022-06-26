@@ -26,6 +26,7 @@
 @import url(../blocks/elements/__name/elements__name.css);
 @import url(../blocks/elements/__like-button/elements__like-button.css);
 @import url(../blocks/elements/__like-button/_active/elements__like-button_active.css);
+@import url(../blocks/elements/__remove-button/elements__remove-button.css);
 
 /* Footer Section Styles */
 @import url(../blocks/footer/footer.css);
@@ -44,3 +45,8 @@
 @import url(../blocks/popup/__submit-button/popup__submit-button.css);
 @import url(../blocks/popup/__close-button/popup__close-button.css);
 @import url(../blocks/popup/__overlay/popup__overlay.css);
+
+/* Popup New Place Styles */
+@import url(../blocks/popup-new-place/popup-new-place.css);
+@import url(../blocks/popup-new-place/__container/popup-new-place__container.css);
+@import url(../blocks/popup-new-place/_open/popup-new-place_open.css);
