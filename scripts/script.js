@@ -52,3 +52,14 @@ function newPlaceSubmit(evt){
     addFormElement.classList.remove('popup-new-place_open');
 }
 
+
+
+let elementLike = document.querySelector('.elements');
+
+elementLike.addEventListener('click', evt => {
+    
+    console.log(evt.target.type === 'button');
+    if (evt.target.type === 'button'){
+    evt.target.classList.toggle('elements__like-button_active');
+    console.log(evt.target.classList);};
+})
