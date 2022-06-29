@@ -1,4 +1,6 @@
 .popup{
+    visibility: hidden;
+    opacity: 0;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -6,6 +8,5 @@
     left: 0;
     background-color: transparent;
     justify-content: center;
-    display: none;
-
+    display: flex;
 }
