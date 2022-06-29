@@ -42,10 +42,10 @@ let profileJob = document.querySelector('.profile__description');
 let elements = document.querySelector('.elements');
 let placeName = document.querySelector('.popup__input_type_place-name');
 let placeImageUrl = document.querySelector('.popup__input_type_image-url');
-let imagePopup = document.querySelector('.popup-image');
+let imagePopup = document.querySelector('.popup_type_image');
 let imagePopupCloseButon = document.querySelector('#pi-close');
-let bigImage = imagePopup.querySelector('.popup-image__image');
-let citeImage = imagePopup.querySelector('.popup-image__cite');
+let bigImage = imagePopup.querySelector('.popup__image');
+let citeImage = imagePopup.querySelector('.popup__cite');
 
 // Place Cards creation from the initialCards Array
 initialCards.forEach(item => {
@@ -128,8 +128,8 @@ function newPlaceSubmit(evt){
     placeElement.querySelector('.elements__image').setAttribute('alt', placeName.value);
     elements.prepend(placeElement);
 
-    placeName.value = 'Example';
-    placeImageUrl.value = 'https://www.exaple.com/image.jpg';
+    placeName.value = 'Название';
+    placeImageUrl.value = 'Ссылка на картинку';
 }
 
 // Place Card Delete Funciton
