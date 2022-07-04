@@ -44,19 +44,17 @@ function formOpen(){
 }
 
 // Edit Form Submit Function
-function formSubmitHandler(event){
-    
+function formSubmitHandler(evt){
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
     closePopup(editFormPopup);
-    event.preventDefault();
+    evt.preventDefault();
 }
 
 // Place Card Submit Funciton
 function newPlaceSubmit(evt){
     evt.preventDefault();
     let cardObject = [{name: placeName.value, link: placeImageUrl.value}];
-    console.log(cardObject);
     cardsGenerator(cardObject);
     closePopup(addFormPopup);
     addFormElemnt.reset();
@@ -106,6 +104,5 @@ function cardsGenerator(array) {
         placeElement.querySelector('.elements__image').addEventListener('click', placeElementOpen);
 
         element.prepend(placeElement);
-        console.log(array);
 });
 }
