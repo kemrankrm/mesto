@@ -5,7 +5,7 @@
     opacity: 1;
     z-index: 2;
     border-radius: 10px;
-    top: 195px;
+    top: calc(50% + 150px);
     position:fixed;
     display: flex;
     flex-direction: column;

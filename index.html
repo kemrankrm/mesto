@@ -37,11 +37,11 @@
         <div class="popup popup_type_profile-edit">
             <div class="popup__container">
                 <button class="popup__close-button" type="button" id="pup-close"></button> 
-                <form class="popup__form" name="popup__form">
+                <form class="popup__form popup__form_type_profile-edit" name="popup__form">
                     <h2 class="popup__text">Редактировать профиль</h2>
                     <fieldset class="popup__input-container">
-                        <input type="text" class="popup__input popup__input_type_name" value="Жак-Ив Кусто">
-                        <input type="text" class="popup__input popup__input_type_job" value="Иследователь">
+                        <input type="text" class="popup__input popup__input_type_name" placeholder="Введите имя" value="Жак-Ив Кусто">
+                        <input type="text" class="popup__input popup__input_type_job" placeholder="Введите профессию" value="Иследователь">
                         <input type="submit" class="popup__submit-button" value="Сохранить">
                     </fieldset>
                 </form>
@@ -55,8 +55,8 @@
                 <form class="popup__form popup__form_type_new-place" name="popup__form">
                     <h2 class="popup__text">Новое место</h2>
                     <fieldset class="popup__input-container">
-                        <input type="text" class="popup__input popup__input_type_place-name" value="Название">
-                        <input type="text" class="popup__input popup__input_type_image-url" value="Ссылка на картинку">
+                        <input type="text" class="popup__input popup__input_type_place-name" placeholder="Название" value="">
+                        <input type="url" class="popup__input popup__input_type_image-url" placeholder="Ссылка на картинку" value="">
                         <input type="submit" class="popup__submit-button" value="Сохранить" id="np-submit">
                     </fieldset>
                 </form>
@@ -86,6 +86,7 @@
         
 
     </div>
+    <script src="./scripts/cards.js"></script>
     <script src="./scripts/script.js"></script>
 </body>
 </html>

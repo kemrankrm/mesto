@@ -1,62 +1,34 @@
-// Place Cards Array
-const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
-
 // Variable Setup
-let editButton = document.querySelector('.profile__edit-button');
-let addButton = document.querySelector('.profile__add-button');
-let formElement = document.querySelector('.popup');
+const editButton = document.querySelector('.profile__edit-button');
+const addButton = document.querySelector('.profile__add-button');
+let editFormElement = document.querySelector('.popup_type_profile-edit');
 let addFormElement = document.querySelector('#popup-np');
 let formElementClose = document.querySelector('#pup-close');
-let formSubmitButton = document.querySelector('.popup__submit-button');
-let newPlaceSubmitButton = document.querySelector('#np-submit');
-let newPlaceCloseButton = document.querySelector('#np-close');
+const formSubmitButton = document.querySelector('.popup__submit-button');
+const newPlaceSubmitButton = document.querySelector('#np-submit');
+const newPlaceCloseButton = document.querySelector('#np-close');
 let nameInput = document.querySelector('.popup__input_type_name');
 let jobInput = document.querySelector('.popup__input_type_job');
 let profileName = document.querySelector('.profile__name');
 let profileJob = document.querySelector('.profile__description');
-let elements = document.querySelector('.elements');
+let element = document.querySelector('.elements');
 let placeName = document.querySelector('.popup__input_type_place-name');
 let placeImageUrl = document.querySelector('.popup__input_type_image-url');
 let imagePopup = document.querySelector('.popup_type_image');
-let imagePopupCloseButon = document.querySelector('#pi-close');
+const imagePopupCloseButon = document.querySelector('#pi-close');
 let bigImage = imagePopup.querySelector('.popup__image');
 let citeImage = imagePopup.querySelector('.popup__cite');
+const elementTemplate = document.querySelector('#element-template').content;
 
 // Place Cards creation from the initialCards Array
 initialCards.forEach(item => {
-    const elementTemplate = document.querySelector('#element-template').content;
     let placeElement = elementTemplate.querySelector('.elements__element').cloneNode(true);
     
     placeElement.querySelector('.elements__name').textContent = item.name;
     placeElement.querySelector('.elements__image').setAttribute('src', item.link);
     placeElement.querySelector('.elements__image').setAttribute('alt', item.name);
 
-    elements.append(placeElement);
+    element.append(placeElement);
 })
 
 // Event Listeners
@@ -66,9 +38,9 @@ formElementClose.addEventListener('click', formClose);
 formSubmitButton.addEventListener('click', formSubmitHandler);
 newPlaceCloseButton.addEventListener('click', newPlaceFormClose);
 newPlaceSubmitButton.addEventListener('click', newPlaceSubmit);
-elements.addEventListener('click', placeElementRemove);
-elements.addEventListener('click', placeElementLike);
-elements.addEventListener('click', placeElementOpen);
+element.addEventListener('click', placeElementRemove);
+element.addEventListener('click', placeElementLike);
+element.addEventListener('click', placeElementOpen);
 imagePopupCloseButon.addEventListener('click', placeElementClose);
 
 
@@ -76,8 +48,8 @@ imagePopupCloseButon.addEventListener('click', placeElementClose);
 // Functions:
 // Edit Form Open Function
 function formOpen(){
-    formElement.classList.add('popup_open');
-    formElement.classList.remove('popup_close');
+    editFormElement.classList.add('popup_open');
+    editFormElement.classList.remove('popup_close');
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
 }
@@ -95,9 +67,8 @@ function addFormOpen(){
 
 // Edit Form Close Function
 function formClose(){
-    formElement.classList.remove('popup_open');
-    formElement.classList.add('popup_close');
-    console.log(formElement.classList);
+    editFormElement.classList.remove('popup_open');
+    editFormElement.classList.add('popup_close');
 }
 
 // Place Card Add Form Close Function
@@ -111,7 +82,7 @@ function formSubmitHandler(evt){
     evt.preventDefault();
     profileName.textContent = `${nameInput.value}`;
     profileJob.textContent = `${jobInput.value}`;
-    formElement.classList.remove('popup_open');
+    editFormElement.classList.remove('popup_open');
 }
 
 // Place Card Submit Funciton
@@ -126,7 +97,7 @@ function newPlaceSubmit(evt){
     placeElement.querySelector('.elements__name').textContent = placeName.value;
     placeElement.querySelector('.elements__image').setAttribute('src', placeImageUrl.value);
     placeElement.querySelector('.elements__image').setAttribute('alt', placeName.value);
-    elements.prepend(placeElement);
+    element.prepend(placeElement);
 
     placeName.value = 'Название';
     placeImageUrl.value = 'Ссылка на картинку';
