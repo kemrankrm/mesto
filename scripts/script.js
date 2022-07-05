@@ -22,7 +22,7 @@ const citeImage = imagePopup.querySelector('.popup__cite');
 const elementTemplate = document.querySelector('#element-template').content;
 
 // Initial Cards Generation
-cardsGenerator(initialCards);
+initialCards.forEach(item => renderCard(item));
 
 // Event Listeners
 editButton.addEventListener('click', formOpen);
@@ -32,8 +32,6 @@ editFormElement.addEventListener('submit', formSubmitHandler)
 newPlaceCloseButton.addEventListener('click', () => closePopup(addFormPopup));
 addFormElemnt.addEventListener('submit', newPlaceSubmit);
 imagePopupCloseButon.addEventListener('click', () => closePopup(imagePopup));
-
-
 
 // Functions:
 // Edit Form Open Function
@@ -54,17 +52,15 @@ function formSubmitHandler(evt){
 // Place Card Submit Funciton
 function newPlaceSubmit(evt){
     evt.preventDefault();
-    let cardObject = [{name: placeName.value, link: placeImageUrl.value}];
-    cardsGenerator(cardObject);
+    let cardObject = {name: placeName.value, link: placeImageUrl.value};
+    renderCard(cardObject);
     closePopup(addFormPopup);
     addFormElemnt.reset();
 }
 
 // Place Card Remove Function
 function placeElementRemove(evt){
-    if(evt.target.classList.value === 'elements__remove-button'){
         evt.target.closest('.elements__element').remove();
-    };
 }
 
 // Place Card Like Function
@@ -90,19 +86,24 @@ function closePopup(element){
     element.classList.remove('popup_open');
 }
 
-function cardsGenerator(array) {
-    array.forEach(item => {
+// Card Creation Function
+function createCard(card) {
         const placeElement = elementTemplate.querySelector('.elements__element').cloneNode(true);
         
-        placeElement.querySelector('.elements__name').textContent = item.name;
-        placeElement.querySelector('.elements__image').setAttribute('src', item.link);
-        placeElement.querySelector('.elements__image').setAttribute('alt', item.name);
+        placeElement.querySelector('.elements__name').textContent = card.name;
+        placeElement.querySelector('.elements__image').setAttribute('src', card.link);
+        placeElement.querySelector('.elements__image').setAttribute('alt', card.name);
 
         // Event Listeners Addition
         placeElement.querySelector('.elements__remove-button').addEventListener('click', placeElementRemove);
         placeElement.querySelector('.elements__like-button').addEventListener('click', placeElementLike);
         placeElement.querySelector('.elements__image').addEventListener('click', placeElementOpen);
 
-        element.prepend(placeElement);
-});
+        return placeElement;
 }
+
+// New Card Placing Function
+function renderCard(cardData){
+    element.prepend(createCard(cardData));
+}
+
