@@ -52,7 +52,7 @@ function formSubmitHandler(evt){
 // Place Card Submit Funciton
 function newPlaceSubmit(evt){
     evt.preventDefault();
-    let cardObject = {name: placeName.value, link: placeImageUrl.value};
+    const cardObject = {name: placeName.value, link: placeImageUrl.value};
     renderCard(cardObject);
     closePopup(addFormPopup);
     addFormElemnt.reset();
