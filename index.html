@@ -34,7 +34,7 @@
             <p class="footer__text">© 2020 Mesto Russia</p>
         </footer>
 
-        <div class="popup popup_type_profile-edit">
+        <div class="popup popup_type_profile-edit" id="popup-ep">
             <div class="popup__container">
                 <button class="popup__close-button" type="button" id="pup-close"></button> 
                 <form class="popup__form popup__form_type_profile-edit" name="popup__form" id="edit-form">
@@ -46,7 +46,7 @@
                     </fieldset>
                 </form>
             </div>
-            <div class="popup__overlay"></div>
+            <div class="popup__overlay popup__overlay_type_edit"></div>
         </div>
 
         <div class="popup popup_type_new-place" id="popup-np">
@@ -70,7 +70,7 @@
                 <img class="popup__image" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" alt="">
                 <p class="popup__cite">Карачаево Черкесия</p>
             </div>
-            <div class="popup__overlay popup__overlay_type_big-image"></div>
+            <div class="popup__overlay"></div>
         </div>
         
         <template id="element-template">

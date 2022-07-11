@@ -20,6 +20,8 @@ const imagePopupCloseButon = document.querySelector('#pi-close');
 const bigImage = imagePopup.querySelector('.popup__image');
 const citeImage = imagePopup.querySelector('.popup__cite');
 const elementTemplate = document.querySelector('#element-template').content;
+const editOverlay = editFormPopup.querySelector('.popup__overlay');
+const addOverlay = addFormPopup.querySelector('.popup__overlay');
 
 // Initial Cards Generation
 initialCards.forEach(item => renderCard(item));
@@ -32,6 +34,8 @@ editFormElement.addEventListener('submit', formSubmitHandler)
 newPlaceCloseButton.addEventListener('click', () => closePopup(addFormPopup));
 addFormElemnt.addEventListener('submit', newPlaceSubmit);
 imagePopupCloseButon.addEventListener('click', () => closePopup(imagePopup));
+editOverlay.addEventListener('click', () => closePopup(editFormPopup));
+addOverlay.addEventListener('click', () => closePopup(addFormPopup));
 
 // Functions:
 // Edit Form Open Function
