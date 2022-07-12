@@ -55,3 +55,9 @@
 @import url(../blocks/popup/__cite/popup__cite.css);
 @import url(../blocks/popup/__image/popup__image.css);
 @import url(../blocks/popup/__container/_type/popup__container_type_image.css);
+
+/* Error Styles */
+@import url(../blocks/popup/__input/_type/popup__input_type_error-active.css);
+@import url(../blocks/popup/__error/popup__error.css);
+@import url(../blocks/popup/__name-input-error/popup__name-input-error.css);
+@import url(../blocks/popup/__input/_type/popup__input_type_correct.css);
