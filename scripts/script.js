@@ -27,7 +27,6 @@ const jobInput = editFormElement.elements.job;
 const placeName = addFormElemnt.elements.placeName;
 const placeImageUrl = addFormElemnt.elements.url;
 const editSubmitButton = editFormElement.elements.button;
-console.log(editSubmitButton)
 
 // Initial Cards Generation
 initialCards.forEach(item => renderCard(item));
