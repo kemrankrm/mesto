@@ -58,9 +58,9 @@ document.addEventListener('keydown', (evt) => {
 function formOpen(){
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
-    checkValidity(nameInput, editFormElement, {config});
-    checkValidity(jobInput, editFormElement, {config});
     openPopup(editFormPopup);
+    checkValidity(nameInput, editFormElement, config); //CHECKING THE VALIDITY ONES FORM IS OPEN
+    checkValidity(jobInput, editFormElement, config);  //CHECKING THE VALIDITY ONES FORM IS OPEN
 }
 
 // Edit Form Submit Function

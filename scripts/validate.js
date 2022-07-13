@@ -8,10 +8,7 @@ const config = {
     activeErrorClass: 'popup__input_type_error-active'
 };
 
-
-
 const showErrorMesage = (inputElement, formElement, {errorClass, activeErrorClass, ...rest}) => {
-    console.log(errorClass);
     const errorElement = formElement.querySelector(`.popup__${inputElement.id}-error`);
     errorElement.classList.add(errorClass);
     inputElement.classList.add(activeErrorClass);
@@ -21,7 +18,7 @@ const showErrorMesage = (inputElement, formElement, {errorClass, activeErrorClas
 };
 
 const hideErrorMesage = (inputElement, formElement, {errorClass, activeErrorClass, ...rest}) => {
-    const errorElement = formElement.querySelector(`.popup__${inputElement.id}-error`);
+    const errorElement = formElement.querySelector(`.popup__${inputElement?.id}-error`);
     inputElement.classList.remove(activeErrorClass);
     // inputElement.classList.add('popup__input_type_correct'); UNCOMMENT IN CASE OF NEED
     errorElement.classList.remove(errorClass);
@@ -48,9 +45,6 @@ function checkValidity(inputElement, formElement, {...rest}) {
     } else if(inputElement.validity.valid){
         hideErrorMesage(inputElement, formElement, rest);
     };
-
-    console.log(rest);
-
 };
 
 
