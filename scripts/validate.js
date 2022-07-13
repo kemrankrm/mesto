@@ -1,7 +1,7 @@
 const config = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__submit-button', // NO NEED SINCE 'DISABLED' ATTRIBUTE USED
+    submitButtonSelector: '.popup__submit-button',
     inactiveButtonClass: 'popup__button_disabled', // NO NEED SINCE 'DISABLED' ATTRIBUTE USED
     inputErrorClass: 'popup__input_type_error',
     errorClass: 'popup__error',
@@ -33,9 +33,9 @@ function hasInvalidInputs(inputs) {
 
 function toggleButtonState(state, button) {
     if(state){
-        button?.setAttribute('disabled','');
+        button.setAttribute('disabled','');
     } else if(!state){
-        button?.removeAttribute('disabled');
+        button.removeAttribute('disabled');
     }
 };
 

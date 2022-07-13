@@ -26,6 +26,8 @@ const nameInput = editFormElement.elements.name;
 const jobInput = editFormElement.elements.job;
 const placeName = addFormElemnt.elements.placeName;
 const placeImageUrl = addFormElemnt.elements.url;
+const editSubmitButton = editFormElement.elements.button;
+console.log(editSubmitButton)
 
 // Initial Cards Generation
 initialCards.forEach(item => renderCard(item));
@@ -51,16 +53,16 @@ document.addEventListener('keydown', (evt) => {
     }
 });
 
-
-
 // Functions:
 // Edit Form Open Function
 function formOpen(){
+    const inputs = [nameInput, jobInput];
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
     openPopup(editFormPopup);
     checkValidity(nameInput, editFormElement, config); //CHECKING THE VALIDITY ONES FORM IS OPEN
     checkValidity(jobInput, editFormElement, config);  //CHECKING THE VALIDITY ONES FORM IS OPEN
+    toggleButtonState(hasInvalidInputs(inputs), editSubmitButton);
 }
 
 // Edit Form Submit Function
@@ -128,4 +130,3 @@ function createCard(card) {
 function renderCard(cardData){
     element.prepend(createCard(cardData));
 }
-
