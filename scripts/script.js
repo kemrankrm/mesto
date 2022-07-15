@@ -19,80 +19,86 @@ const editOverlay = editFormPopup.querySelector('.popup__overlay');
 const addOverlay = addFormPopup.querySelector('.popup__overlay');
 const imageOverlay = imagePopup.querySelector('.popup__overlay');
 
+const placeElementTemplate = elementTemplate.querySelector('.elements__element');
+
 //Forms Variables SetUp
 const editFormElement = document.forms.editForm;
-const addFormElemnt = document.forms.addForm;
+const addFormElement = document.forms.addForm;
 const nameInput = editFormElement.elements.name;
 const jobInput = editFormElement.elements.job;
-const placeName = addFormElemnt.elements.placeName;
-const placeImageUrl = addFormElemnt.elements.url;
+const placeName = addFormElement.elements.placeName;
+const placeImageUrl = addFormElement.elements.url;
 const editSubmitButton = editFormElement.elements.button;
+const addSubmitButton = addFormElement.elements.button;
 
 // Initial Cards Generation
 initialCards.forEach(item => renderCard(item));
 
 // Event Listeners
-editButton.addEventListener('click', formOpen);
+editButton.addEventListener('click', openForm);
 addButton.addEventListener('click', () => openPopup(addFormPopup));
 formElementClose.addEventListener('click', () => closePopup(editFormPopup));
-editFormElement.addEventListener('submit', formSubmitHandler)
+editFormElement.addEventListener('submit', submitFormHandler);
 newPlaceCloseButton.addEventListener('click', () => closePopup(addFormPopup));
-addFormElemnt.addEventListener('submit', newPlaceSubmit);
+addFormElement.addEventListener('submit', submitNewPlace);
 imagePopupCloseButon.addEventListener('click', () => closePopup(imagePopup));
 editOverlay.addEventListener('click', () => closePopup(editFormPopup));
 addOverlay.addEventListener('click', () => closePopup(addFormPopup));
 imageOverlay.addEventListener('click', () => closePopup(imagePopup));
 
 // Escape keydown closing
-document.addEventListener('keydown', (evt) => {
+document.addEventListener('keydown', closePopupEsc)
+
+function closePopupEsc(evt){
+    const openedPopup = document.querySelector('.popup_open');
     if(evt.key === 'Escape'){
-        closePopup(editFormPopup);
-        closePopup(addFormPopup);
-        closePopup(imagePopup);
+        closePopup(openedPopup);
     }
-});
+}
 
 // Functions:
 // Edit Form Open Function
-function formOpen(){
-    const inputs = [nameInput, jobInput];
+function openForm(){
+    const editInputs = [nameInput, jobInput];
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
     openPopup(editFormPopup);
     checkValidity(nameInput, editFormElement, config); //CHECKING THE VALIDITY ONES FORM IS OPEN
     checkValidity(jobInput, editFormElement, config);  //CHECKING THE VALIDITY ONES FORM IS OPEN
-    toggleButtonState(hasInvalidInputs(inputs), editSubmitButton);
+    toggleButtonState(hasInvalidInputs(editInputs), editSubmitButton);
 }
 
 // Edit Form Submit Function
-function formSubmitHandler(evt){
+function submitFormHandler(evt){
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
     closePopup(editFormPopup);
     evt.preventDefault();
+
 }
 
 // Place Card Submit Funciton
-function newPlaceSubmit(evt){
+function submitNewPlace(evt){
     evt.preventDefault();
     const cardObject = {name: placeName.value, link: placeImageUrl.value};
     renderCard(cardObject);
     closePopup(addFormPopup);
-    addFormElemnt.reset();
+    addFormElement.reset();
+    toggleButtonState(true, addSubmitButton); //RESET SUBMIT BUTTON STATE
 }
 
 // Place Card Remove Function
-function placeElementRemove(evt){
+function removePlaceElement(evt){
         evt.target.closest('.elements__element').remove();
 }
 
 // Place Card Like Function
-function placeElementLike(evt){
+function likePlaceElement(evt){
         evt.target.classList.toggle('elements__like-button_active');
 }
 
 // Place Card Open Function
-function placeElementOpen(evt){
+function openPlaceElement(evt){
         bigImage.setAttribute('src', evt.target.getAttribute('src'));
         bigImage.setAttribute('alt', evt.target.getAttribute('alt'));
         citeImage.textContent = evt.target.getAttribute('alt');
@@ -111,16 +117,16 @@ function closePopup(element){
 
 // Card Creation Function
 function createCard(card) {
-        const placeElement = elementTemplate.querySelector('.elements__element').cloneNode(true);
+        const placeElement = placeElementTemplate.cloneNode(true);
         
         placeElement.querySelector('.elements__name').textContent = card.name;
         placeElement.querySelector('.elements__image').setAttribute('src', card.link);
         placeElement.querySelector('.elements__image').setAttribute('alt', card.name);
 
         // Event Listeners Addition
-        placeElement.querySelector('.elements__remove-button').addEventListener('click', placeElementRemove);
-        placeElement.querySelector('.elements__like-button').addEventListener('click', placeElementLike);
-        placeElement.querySelector('.elements__image').addEventListener('click', placeElementOpen);
+        placeElement.querySelector('.elements__remove-button').addEventListener('click', removePlaceElement);
+        placeElement.querySelector('.elements__like-button').addEventListener('click', likePlaceElement);
+        placeElement.querySelector('.elements__image').addEventListener('click', openPlaceElement);
 
         return placeElement;
 }

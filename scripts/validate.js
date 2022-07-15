@@ -48,7 +48,7 @@ function checkValidity(inputElement, formElement, {...rest}) {
 };
 
 
-function setEventListneres(formElement, { inputSelector, submitButtonSelector, ...rest }){
+function setEventListeners(formElement, { inputSelector, submitButtonSelector, ...rest }){
     const inputs = Array.from(formElement.querySelectorAll(inputSelector));
     const buttonElement = formElement.querySelector(submitButtonSelector);
 
@@ -63,12 +63,12 @@ function setEventListneres(formElement, { inputSelector, submitButtonSelector, .
 }
 
 
-function enableValidition({formSelector, ...rest}){ //{formSelector, ...rest}
+function enableValidation({formSelector, ...rest}){ //{formSelector, ...rest}
     const formElements = Array.from(document.querySelectorAll(formSelector));
 
     formElements.forEach(form => {
-        setEventListneres(form, {...rest}); //setEventListeners({ form, ...rest })
+        setEventListeners(form, {...rest}); //setEventListeners({ form, ...rest })
     })
 };
 
-enableValidition(config);
+enableValidation(config);

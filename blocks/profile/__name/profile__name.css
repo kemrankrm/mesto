@@ -9,6 +9,9 @@
     letter-spacing: 0em;
     text-align: left;
     max-width: 350px;
+    max-height: 97px;
+    text-overflow: ellipsis;
+    overflow: hidden;  /*Не использовал white-space:nowrap для того чтобы имя занимало максимум 2 строки*/
 }
 
 @media screen and (max-width: 691px) {
