@@ -46,12 +46,10 @@ editOverlay.addEventListener('click', () => closePopup(editFormPopup));
 addOverlay.addEventListener('click', () => closePopup(addFormPopup));
 imageOverlay.addEventListener('click', () => closePopup(imagePopup));
 
-// Escape keydown closing
-document.addEventListener('keydown', closePopupEsc)
-
+//Closing by Esc key Function
 function closePopupEsc(evt){
-    const openedPopup = document.querySelector('.popup_open');
     if(evt.key === 'Escape'){
+        const openedPopup = document.querySelector('.popup_open');
         closePopup(openedPopup);
     }
 }
@@ -107,12 +105,14 @@ function openPlaceElement(evt){
 
 // Popup Open Function
 function openPopup(element){
+    document.addEventListener('keydown', closePopupEsc)
     element.classList.add('popup_open');
 }
 
 // Popup Close Function
 function closePopup(element){
     element.classList.remove('popup_open');
+    document.removeEventListener('keydown', closePopupEsc);
 }
 
 // Card Creation Function
