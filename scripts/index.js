@@ -1,3 +1,19 @@
+//Exporting Data
+import { Card } from "./Card.js";
+import { initialCards } from "./cards.js";
+import { FormValidator } from "./FormValidator.js";
+
+//CONFIG DATA SETUP
+const config = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__submit-button',
+    inactiveButtonClass: 'popup__button_disabled', // NO NEED SINCE 'DISABLED' ATTRIBUTE USED
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error',
+    activeErrorClass: 'popup__input_type_error-active'
+};
+
 // Variable Setup
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
@@ -5,21 +21,16 @@ const editFormPopup = document.querySelector('.popup_type_profile-edit');
 const addFormPopup = document.querySelector('#popup-np');
 const formElementClose = document.querySelector('#pup-close');
 const newPlaceCloseButton = document.querySelector('#np-close');
-
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__description');
 const element = document.querySelector('.elements');
-
 const imagePopup = document.querySelector('.popup_type_image');
 const imagePopupCloseButon = document.querySelector('#pi-close');
 const bigImage = imagePopup.querySelector('.popup__image');
 const citeImage = imagePopup.querySelector('.popup__cite');
-const elementTemplate = document.querySelector('#element-template').content;
 const editOverlay = editFormPopup.querySelector('.popup__overlay');
 const addOverlay = addFormPopup.querySelector('.popup__overlay');
 const imageOverlay = imagePopup.querySelector('.popup__overlay');
-
-const placeElementTemplate = elementTemplate.querySelector('.elements__element');
 
 //Forms Variables SetUp
 const editFormElement = document.forms.editForm;
@@ -31,8 +42,15 @@ const placeImageUrl = addFormElement.elements.url;
 const editSubmitButton = editFormElement.elements.button;
 const addSubmitButton = addFormElement.elements.button;
 
+//Validation Initializing
+const validator = new FormValidator(config);
+validator.enableValidation();
+
 // Initial Cards Generation
-initialCards.forEach(item => renderCard(item));
+initialCards.forEach(item => {
+    const cardElement = new Card(item, '#element-template'); //TEMPLATE SELECTOR MUST BE MODIFIED!!!!!
+    renderCard(cardElement.generateCard());
+});
 
 // Event Listeners
 editButton.addEventListener('click', openForm);
@@ -61,9 +79,9 @@ function openForm(){
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
     openPopup(editFormPopup);
-    checkValidity(nameInput, editFormElement, config); //CHECKING THE VALIDITY ONES FORM IS OPEN
-    checkValidity(jobInput, editFormElement, config);  //CHECKING THE VALIDITY ONES FORM IS OPEN
-    toggleButtonState(hasInvalidInputs(editInputs), editSubmitButton);
+    validator._checkValidity(nameInput, editFormElement); //CHECKING THE VALIDITY ONES FORM IS OPEN
+    validator._checkValidity(jobInput, editFormElement);  //CHECKING THE VALIDITY ONES FORM IS OPEN
+    validator._toggleButtonState(validator._hasInvalidInputs(editInputs), editSubmitButton);
 }
 
 // Edit Form Submit Function
@@ -79,27 +97,18 @@ function submitFormHandler(evt){
 function submitNewPlace(evt){
     evt.preventDefault();
     const cardObject = {name: placeName.value, link: placeImageUrl.value};
-    renderCard(cardObject);
+    const cardElement = new Card(cardObject, '#element-template');
+    renderCard(cardElement.generateCard());
     closePopup(addFormPopup);
     addFormElement.reset();
-    toggleButtonState(true, addSubmitButton); //RESET SUBMIT BUTTON STATE
-}
-
-// Place Card Remove Function
-function removePlaceElement(evt){
-        evt.target.closest('.elements__element').remove();
-}
-
-// Place Card Like Function
-function likePlaceElement(evt){
-        evt.target.classList.toggle('elements__like-button_active');
+    validator._toggleButtonState(true, addSubmitButton); //RESET SUBMIT BUTTON STATE
 }
 
 // Place Card Open Function
-function openPlaceElement(evt){
-        bigImage.setAttribute('src', evt.target.getAttribute('src'));
-        bigImage.setAttribute('alt', evt.target.getAttribute('alt'));
-        citeImage.textContent = evt.target.getAttribute('alt');
+export function openPlaceElement(title, link){
+        bigImage.setAttribute('src', link);
+        bigImage.setAttribute('alt', title);
+        citeImage.textContent = title;
         openPopup(imagePopup);
 }
 
@@ -115,23 +124,7 @@ function closePopup(element){
     document.removeEventListener('keydown', closePopupEsc);
 }
 
-// Card Creation Function
-function createCard(card) {
-        const placeElement = placeElementTemplate.cloneNode(true);
-        
-        placeElement.querySelector('.elements__name').textContent = card.name;
-        placeElement.querySelector('.elements__image').setAttribute('src', card.link);
-        placeElement.querySelector('.elements__image').setAttribute('alt', card.name);
-
-        // Event Listeners Addition
-        placeElement.querySelector('.elements__remove-button').addEventListener('click', removePlaceElement);
-        placeElement.querySelector('.elements__like-button').addEventListener('click', likePlaceElement);
-        placeElement.querySelector('.elements__image').addEventListener('click', openPlaceElement);
-
-        return placeElement;
-}
-
 // New Card Placing Function
 function renderCard(cardData){
-    element.prepend(createCard(cardData));
+    element.prepend(cardData);
 }

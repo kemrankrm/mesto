@@ -6,7 +6,9 @@
 3. Event Listeners
 4. Functions (Arrow Functions, Callbacks etc.)
 5. Content Template element
-6. Class addtion/removal
+6. CSS Class addtion/removal
+7. Separate JS file with CLASS'es of Place Cards and Form Validation Functions
+8. TYPE MODULE connection to the HTML file.
 
 and a few others. 
 
@@ -20,5 +22,3 @@ and a few others.
 6. возможность удалять карточки
 
 ### Ссылка на проект ==> https://kemrankrm.github.io/mesto/
-
-P.S обращение к ревьюеру. Если возможно, свяжитесь со мной, я бы хотел обсудить некоторые детали.
