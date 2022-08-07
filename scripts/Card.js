@@ -1,4 +1,4 @@
-import { openPlaceElement } from "./index.js";
+import { openPlaceElement } from "./utils/utils.js";
 
 export class Card{
     constructor(cardData, templateSelector){
@@ -27,13 +27,14 @@ export class Card{
     _handleCardRemove(){
         this._element.remove();
     }
-   
+
 //Private Method
-    _setEventListeners(){
+    _setEventListeners(evt){
         this._element.querySelector('.elements__image').addEventListener('click', () => {
-            console.log('image pressed');
+            console.log('image pressed', this._element);
             openPlaceElement(this._title, this._image);
-        })
+            // this.enlargeCard()
+        });
         
         this._element.querySelector('.elements__like-button').addEventListener('click', () => {
             console.log('like button pressed');
@@ -52,6 +53,7 @@ export class Card{
         this._element = this._getTemplate();
 
         this._element.querySelector('.elements__image').setAttribute('src', this._image);
+        this._element.querySelector('.elements__image').setAttribute('alt', this._title);
         this._element.querySelector('.elements__name').textContent = this._title;
 
         this._setEventListeners();

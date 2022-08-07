@@ -1,6 +1,6 @@
 export class FormValidator{
-    constructor(data){
-        this._formSelector = data.formSelector;
+    constructor(data, formSelector){
+        this._formSelector = formSelector;
         this._inputSelector = data.inputSelector;
         this._submitButtonSelector = data.submitButtonSelector;
         this._inactiveButtonClass = data.inactiveButtonClass;
@@ -34,7 +34,7 @@ export class FormValidator{
     };
 
 
-    _toggleButtonState(state, button) {
+    toggleButtonState(state, button) {
         if(state){
             button.setAttribute('disabled','');
         } else if(!state){
@@ -55,19 +55,17 @@ export class FormValidator{
         const buttonElement = formElement.querySelector(this._submitButtonSelector);
     
      
-        this._toggleButtonState(this._hasInvalidInputs(inputs), buttonElement);
+        // this.toggleButtonState(this._hasInvalidInputs(inputs), buttonElement);
     
         inputs.forEach(input => {
             input.addEventListener('input', () => {
                 this._checkValidity(input, formElement);
-                this._toggleButtonState(this._hasInvalidInputs(inputs), buttonElement);})
+                this.toggleButtonState(this._hasInvalidInputs(inputs), buttonElement);})
             });
     }
 
     enableValidation(){
-        const formElements = Array.from(document.querySelectorAll(this._formSelector));
-        console.log(formElements);
-        formElements.forEach(form => {
-            this._setEventListeners(form);}); //setEventListeners({ form, ...rest })
+        const formElements = document.querySelector(`#${this._formSelector}`);
+        this._setEventListeners(formElements); //setEventListeners({ form, ...rest })
     }
 }

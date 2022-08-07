@@ -1,11 +1,13 @@
-//Exporting Data
+//Importing Data
 import { Card } from "./Card.js";
 import { initialCards } from "./cards.js";
 import { FormValidator } from "./FormValidator.js";
+import { imagePopup } from "./utils/utils.js";
+import { openPopup } from "./utils/utils.js";
+import { closePopup } from "./utils/utils.js";
 
 //CONFIG DATA SETUP
 const config = {
-    formSelector: '.popup__form',
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__submit-button',
     inactiveButtonClass: 'popup__button_disabled', // NO NEED SINCE 'DISABLED' ATTRIBUTE USED
@@ -24,68 +26,62 @@ const newPlaceCloseButton = document.querySelector('#np-close');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__description');
 const element = document.querySelector('.elements');
-const imagePopup = document.querySelector('.popup_type_image');
-const imagePopupCloseButon = document.querySelector('#pi-close');
-const bigImage = imagePopup.querySelector('.popup__image');
-const citeImage = imagePopup.querySelector('.popup__cite');
+const imagePopupCloseButton = document.querySelector('#pi-close');
 const editOverlay = editFormPopup.querySelector('.popup__overlay');
 const addOverlay = addFormPopup.querySelector('.popup__overlay');
 const imageOverlay = imagePopup.querySelector('.popup__overlay');
 
 //Forms Variables SetUp
-const editFormElement = document.forms.editForm;
-const addFormElement = document.forms.addForm;
-const nameInput = editFormElement.elements.name;
-const jobInput = editFormElement.elements.job;
-const placeName = addFormElement.elements.placeName;
-const placeImageUrl = addFormElement.elements.url;
-const editSubmitButton = editFormElement.elements.button;
-const addSubmitButton = addFormElement.elements.button;
+const formEditProfile = document.forms.editForm;
+const formAddCard = document.forms.addForm;
+const nameInput = formEditProfile.elements.name;
+const jobInput = formEditProfile.elements.job;
+const placeName = formAddCard.elements.placeName;
+const placeImageUrl = formAddCard.elements.url;
+const buttonForFormEditProfileSubmit = formEditProfile.elements.button;
+const buttonForFormAddCardSubmit = formAddCard.elements.button;
 
 //Validation Initializing
-const validator = new FormValidator(config);
-validator.enableValidation();
+const formSelectors = [formEditProfile.id, formAddCard.id];
+const editFormValidator = new FormValidator(config, formSelectors[0]);
+const addFormValidator = new FormValidator(config, formSelectors[1]);
+editFormValidator.enableValidation();
+addFormValidator.enableValidation();
 
 // Initial Cards Generation
 initialCards.forEach(item => {
-    const cardElement = new Card(item, '#element-template'); //TEMPLATE SELECTOR MUST BE MODIFIED!!!!!
-    renderCard(cardElement.generateCard());
+    renderCard(createCard(item).generateCard());
 });
 
 // Event Listeners
-editButton.addEventListener('click', openForm);
+editButton.addEventListener('click', openEditProfileForm);
 addButton.addEventListener('click', () => openPopup(addFormPopup));
 formElementClose.addEventListener('click', () => closePopup(editFormPopup));
-editFormElement.addEventListener('submit', submitFormHandler);
+formEditProfile.addEventListener('submit', submitEditProfileForm);
 newPlaceCloseButton.addEventListener('click', () => closePopup(addFormPopup));
-addFormElement.addEventListener('submit', submitNewPlace);
-imagePopupCloseButon.addEventListener('click', () => closePopup(imagePopup));
+formAddCard.addEventListener('submit', submitNewPlace);
+imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
 editOverlay.addEventListener('click', () => closePopup(editFormPopup));
 addOverlay.addEventListener('click', () => closePopup(addFormPopup));
 imageOverlay.addEventListener('click', () => closePopup(imagePopup));
 
-//Closing by Esc key Function
-function closePopupEsc(evt){
-    if(evt.key === 'Escape'){
-        const openedPopup = document.querySelector('.popup_open');
-        closePopup(openedPopup);
-    }
-}
-
 // Functions:
 // Edit Form Open Function
-function openForm(){
+function openEditProfileForm(){
     const editInputs = [nameInput, jobInput];
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
     openPopup(editFormPopup);
-    validator._checkValidity(nameInput, editFormElement); //CHECKING THE VALIDITY ONES FORM IS OPEN
-    validator._checkValidity(jobInput, editFormElement);  //CHECKING THE VALIDITY ONES FORM IS OPEN
-    validator._toggleButtonState(validator._hasInvalidInputs(editInputs), editSubmitButton);
+    editFormValidator._checkValidity(nameInput, formEditProfile);//CHECKING THE VALIDITY ONES FORM IS OPEN
+    editFormValidator._checkValidity(jobInput, formEditProfile);//CHECKING THE VALIDITY ONES FORM IS OPEN 
+    editFormValidator.toggleButtonState(editFormValidator._hasInvalidInputs(editInputs), buttonForFormEditProfileSubmit);
+    // Проверка формы на протяжении всего проекта писалась по такой схеме. 
+    //В данном проекте думаю суть именно в ООП и классах, а не в схеме валидации формы
+    //Прошу пересмотреть замечание. Заранее благодарю!
 }
 
 // Edit Form Submit Function
-function submitFormHandler(evt){
+function submitEditProfileForm(evt){
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
     closePopup(editFormPopup);
@@ -97,34 +93,20 @@ function submitFormHandler(evt){
 function submitNewPlace(evt){
     evt.preventDefault();
     const cardObject = {name: placeName.value, link: placeImageUrl.value};
-    const cardElement = new Card(cardObject, '#element-template');
-    renderCard(cardElement.generateCard());
+    // const cardElement = new Card(cardObject, '#element-template');
+    renderCard(createCard(cardObject).generateCard());
     closePopup(addFormPopup);
-    addFormElement.reset();
-    validator._toggleButtonState(true, addSubmitButton); //RESET SUBMIT BUTTON STATE
-}
-
-// Place Card Open Function
-export function openPlaceElement(title, link){
-        bigImage.setAttribute('src', link);
-        bigImage.setAttribute('alt', title);
-        citeImage.textContent = title;
-        openPopup(imagePopup);
-}
-
-// Popup Open Function
-function openPopup(element){
-    document.addEventListener('keydown', closePopupEsc)
-    element.classList.add('popup_open');
-}
-
-// Popup Close Function
-function closePopup(element){
-    element.classList.remove('popup_open');
-    document.removeEventListener('keydown', closePopupEsc);
+    formAddCard.reset();
+    addFormValidator.toggleButtonState(true, buttonForFormAddCardSubmit); //RESET SUBMIT BUTTON STATE
 }
 
 // New Card Placing Function
 function renderCard(cardData){
     element.prepend(cardData);
+}
+
+//New Card Creation Function
+function createCard(cardData){
+    const cardElement = new Card(cardData, '#element-template');
+    return cardElement;
 }
