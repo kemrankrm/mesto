@@ -33,7 +33,6 @@ export class FormValidator{
         });
     };
 
-
     toggleButtonState(state, button) {
         if(state){
             button.setAttribute('disabled','');
@@ -64,6 +63,23 @@ export class FormValidator{
             });
     }
 
+    _setFormElements(){
+        const formElements = document.querySelector(`#${this._formSelector}`);
+        const inputs = Array.from(formElements.querySelectorAll(this._inputSelector));
+
+        return {input: inputs,
+                form: formElements}
+    }
+
+//Public Method
+    clearValidationErrors(){
+        this._setFormElements().input
+        .forEach(input => {
+            this._hideErrorMesage(input, this._setFormElements().form)
+        });
+    }
+
+//Public Method
     enableValidation(){
         const formElements = document.querySelector(`#${this._formSelector}`);
         this._setEventListeners(formElements); //setEventListeners({ form, ...rest })

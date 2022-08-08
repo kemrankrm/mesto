@@ -71,13 +71,8 @@ function openEditProfileForm(){
     const editInputs = [nameInput, jobInput];
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
+    editFormValidator.clearValidationErrors();
     openPopup(editFormPopup);
-    editFormValidator._checkValidity(nameInput, formEditProfile);//CHECKING THE VALIDITY ONES FORM IS OPEN
-    editFormValidator._checkValidity(jobInput, formEditProfile);//CHECKING THE VALIDITY ONES FORM IS OPEN 
-    editFormValidator.toggleButtonState(editFormValidator._hasInvalidInputs(editInputs), buttonForFormEditProfileSubmit);
-    // Проверка формы на протяжении всего проекта писалась по такой схеме. 
-    //В данном проекте думаю суть именно в ООП и классах, а не в схеме валидации формы
-    //Прошу пересмотреть замечание. Заранее благодарю!
 }
 
 // Edit Form Submit Function
@@ -93,7 +88,6 @@ function submitEditProfileForm(evt){
 function submitNewPlace(evt){
     evt.preventDefault();
     const cardObject = {name: placeName.value, link: placeImageUrl.value};
-    // const cardElement = new Card(cardObject, '#element-template');
     renderCard(createCard(cardObject).generateCard());
     closePopup(addFormPopup);
     formAddCard.reset();

@@ -29,20 +29,22 @@ export class Card{
     }
 
 //Private Method
+    _findImageElement(){
+        const imageElement = this._element.querySelector('.elements__image');
+        return imageElement;
+    }
+
+//Private Method
     _setEventListeners(evt){
-        this._element.querySelector('.elements__image').addEventListener('click', () => {
-            console.log('image pressed', this._element);
+        this._findImageElement().addEventListener('click', () => {
             openPlaceElement(this._title, this._image);
-            // this.enlargeCard()
         });
         
         this._element.querySelector('.elements__like-button').addEventListener('click', () => {
-            console.log('like button pressed');
             this._handleCardLike();
         })
 
         this._element.querySelector('.elements__remove-button').addEventListener('click', () => {
-            console.log('remove button pressed');
             this._handleCardRemove();
         })
         
@@ -52,8 +54,8 @@ export class Card{
     generateCard(){
         this._element = this._getTemplate();
 
-        this._element.querySelector('.elements__image').setAttribute('src', this._image);
-        this._element.querySelector('.elements__image').setAttribute('alt', this._title);
+        this._findImageElement().setAttribute('src', this._image);
+        this._findImageElement().setAttribute('alt', this._title);
         this._element.querySelector('.elements__name').textContent = this._title;
 
         this._setEventListeners();
