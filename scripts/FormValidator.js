@@ -50,7 +50,7 @@ export class FormValidator{
     };
 
     _setEventListeners(formElement){
-        const inputs = Array.from(formElement.querySelectorAll(this._inputSelector));
+        const inputs = this._setFormElements().input;
         const buttonElement = formElement.querySelector(this._submitButtonSelector);
     
      
@@ -81,7 +81,6 @@ export class FormValidator{
 
 //Public Method
     enableValidation(){
-        const formElements = document.querySelector(`#${this._formSelector}`);
-        this._setEventListeners(formElements); //setEventListeners({ form, ...rest })
+        this._setEventListeners(this._setFormElements().form); //setEventListeners()
     }
 }
