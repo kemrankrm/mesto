@@ -2,44 +2,34 @@
 import { Card } from "./Card.js";
 import { initialCards } from "./cards.js";
 import { FormValidator } from "./FormValidator.js";
-import { imagePopup } from "./utils/utils.js";
+import { config,
+        imagePopup,
+        bigImage,
+        citeImage,
+        editButton,
+        addButton,
+        editFormPopup,
+        addFormPopup,
+        formElementClose,
+        newPlaceCloseButton,
+        profileName,
+        profileJob,
+        element,
+        imagePopupCloseButton,
+        editOverlay,
+        addOverlay,
+        imageOverlay,
+        formEditProfile,
+        formAddCard,
+        nameInput,
+        jobInput,
+        placeName,
+        placeImageUrl,
+        buttonForFormEditProfileSubmit,
+        buttonForFormAddCardSubmit} from "./utils/constants.js";
 import { openPopup } from "./utils/utils.js";
 import { closePopup } from "./utils/utils.js";
-
-//CONFIG DATA SETUP
-const config = {
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__submit-button',
-    inactiveButtonClass: 'popup__button_disabled', // NO NEED SINCE 'DISABLED' ATTRIBUTE USED
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__error',
-    activeErrorClass: 'popup__input_type_error-active'
-};
-
-// Variable Setup
-const editButton = document.querySelector('.profile__edit-button');
-const addButton = document.querySelector('.profile__add-button');
-const editFormPopup = document.querySelector('.popup_type_profile-edit');
-const addFormPopup = document.querySelector('#popup-np');
-const formElementClose = document.querySelector('#pup-close');
-const newPlaceCloseButton = document.querySelector('#np-close');
-const profileName = document.querySelector('.profile__name');
-const profileJob = document.querySelector('.profile__description');
-const element = document.querySelector('.elements');
-const imagePopupCloseButton = document.querySelector('#pi-close');
-const editOverlay = editFormPopup.querySelector('.popup__overlay');
-const addOverlay = addFormPopup.querySelector('.popup__overlay');
-const imageOverlay = imagePopup.querySelector('.popup__overlay');
-
-//Forms Variables SetUp
-const formEditProfile = document.forms.editForm;
-const formAddCard = document.forms.addForm;
-const nameInput = formEditProfile.elements.name;
-const jobInput = formEditProfile.elements.job;
-const placeName = formAddCard.elements.placeName;
-const placeImageUrl = formAddCard.elements.url;
-const buttonForFormEditProfileSubmit = formEditProfile.elements.button;
-const buttonForFormAddCardSubmit = formAddCard.elements.button;
+import Section from "./Section.js";
 
 //Validation Initializing
 const formSelectors = [formEditProfile.id, formAddCard.id];
@@ -49,9 +39,7 @@ editFormValidator.enableValidation();
 addFormValidator.enableValidation();
 
 // Initial Cards Generation
-initialCards.forEach(item => {
-    renderCard(createCard(item).generateCard());
-});
+cardRenderer(initialCards);
 
 // Event Listeners
 editButton.addEventListener('click', openEditProfileForm);
@@ -87,20 +75,23 @@ function submitEditProfileForm(evt){
 // Place Card Submit Funciton
 function submitNewPlace(evt){
     evt.preventDefault();
-    const cardObject = {name: placeName.value, link: placeImageUrl.value};
-    renderCard(createCard(cardObject).generateCard());
+    const cardObject = [{name: placeName.value, link: placeImageUrl.value}];
+    cardRenderer(cardObject);
     closePopup(addFormPopup);
     formAddCard.reset();
     addFormValidator.toggleButtonState(true, buttonForFormAddCardSubmit); //RESET SUBMIT BUTTON STATE
 }
 
-// New Card Placing Function
-function renderCard(cardData){
-    element.prepend(cardData);
-}
-
-//New Card Creation Function
-function createCard(cardData){
-    const cardElement = new Card(cardData, '#element-template');
-    return cardElement;
+function cardRenderer(cardInfo){
+    const newCard = new Section({ 
+        data: cardInfo,
+        renderer: (item) => {
+            const card = new Card(item, '#element-template');
+            
+            const cardElement = card.generateCard();
+            newCard._setCard(cardElement);
+        }
+    }, '.elements');
+    
+    newCard.renderItem();
 }
