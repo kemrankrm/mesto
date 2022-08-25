@@ -1,35 +1,16 @@
 //Importing Data
 import { Card } from "./Card.js";
+import { Section }from "./Section.js";
+import { PopupWithForm } from "./PopupWithForm.js";
+import { PopupWithImage } from "./PopupWithImage.js";
 import { initialCards } from "./cards.js";
+import { UserInfo } from "./UserInfo.js";
 import { FormValidator } from "./FormValidator.js";
 import { config,
-        imagePopup,
-        bigImage,
-        citeImage,
         editButton,
         addButton,
-        editFormPopup,
-        addFormPopup,
-        formElementClose,
-        newPlaceCloseButton,
-        profileName,
-        profileJob,
-        element,
-        imagePopupCloseButton,
-        editOverlay,
-        addOverlay,
-        imageOverlay,
         formEditProfile,
-        formAddCard,
-        nameInput,
-        jobInput,
-        placeName,
-        placeImageUrl,
-        buttonForFormEditProfileSubmit,
-        buttonForFormAddCardSubmit} from "./utils/constants.js";
-import { openPopup } from "./utils/utils.js";
-import { closePopup } from "./utils/utils.js";
-import Section from "./Section.js";
+        formAddCard} from "./utils/constants.js";
 
 //Validation Initializing
 const formSelectors = [formEditProfile.id, formAddCard.id];
@@ -42,54 +23,48 @@ addFormValidator.enableValidation();
 cardRenderer(initialCards);
 
 // Event Listeners
-editButton.addEventListener('click', openEditProfileForm);
-addButton.addEventListener('click', () => openPopup(addFormPopup));
-formElementClose.addEventListener('click', () => closePopup(editFormPopup));
-formEditProfile.addEventListener('submit', submitEditProfileForm);
-newPlaceCloseButton.addEventListener('click', () => closePopup(addFormPopup));
-formAddCard.addEventListener('submit', submitNewPlace);
-imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
-editOverlay.addEventListener('click', () => closePopup(editFormPopup));
-addOverlay.addEventListener('click', () => closePopup(addFormPopup));
-imageOverlay.addEventListener('click', () => closePopup(imagePopup));
+editButton.addEventListener('click', () => {
 
-// Functions:
-// Edit Form Open Function
-function openEditProfileForm(){
-    const editInputs = [nameInput, jobInput];
-    nameInput.value = profileName.textContent;
-    jobInput.value = profileJob.textContent;
-    editFormValidator.clearValidationErrors();
-    openPopup(editFormPopup);
-}
+    const editForm = new PopupWithForm('.popup_type_profile-edit', {
+        submitter: (data) => {
+            const userInfo = new UserInfo('.profile__name', '.profile__description');
+            userInfo.setUserInfo(data);
+            editForm.close();
+        }
+    });
+    
+    const profInfo = new UserInfo('.profile__name', '.profile__description');
+    document.forms.editForm.elements.name.value = profInfo.getUserInfo().name;
+    document.forms.editForm.elements.job.value = profInfo.getUserInfo().description;
+    
+    editForm.open();
+});
 
-// Edit Form Submit Function
-function submitEditProfileForm(evt){
-    profileName.textContent = nameInput.value;
-    profileJob.textContent = jobInput.value;
-    closePopup(editFormPopup);
-    evt.preventDefault();
-
-}
-
-// Place Card Submit Funciton
-function submitNewPlace(evt){
-    evt.preventDefault();
-    const cardObject = [{name: placeName.value, link: placeImageUrl.value}];
-    cardRenderer(cardObject);
-    closePopup(addFormPopup);
-    formAddCard.reset();
-    addFormValidator.toggleButtonState(true, buttonForFormAddCardSubmit); //RESET SUBMIT BUTTON STATE
-}
+addButton.addEventListener('click', () => {
+    const addPlaceForm = new PopupWithForm('.popup_type_new-place', {
+        submitter: (data) => {
+            cardRenderer([data]);
+            addPlaceForm.close();
+            document.forms.addForm.reset();
+        }
+    })
+    addPlaceForm.open();    
+});
 
 function cardRenderer(cardInfo){
     const newCard = new Section({ 
         data: cardInfo,
         renderer: (item) => {
-            const card = new Card(item, '#element-template');
+            const card = new Card(item, '#element-template', {
+                handleCardClick: () => {
+                    const openImagePopup = new PopupWithImage('.popup_type_image', item.name, item.link);
+                    openImagePopup.open();
+                    openImagePopup.setEventListeners()
+                }
+            });
             
             const cardElement = card.generateCard();
-            newCard._setCard(cardElement);
+            newCard.addItem(cardElement);
         }
     }, '.elements');
     

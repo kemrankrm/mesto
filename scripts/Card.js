@@ -1,10 +1,9 @@
-import { openPlaceElement } from "./utils/utils.js";
-
 export class Card{
-    constructor(cardData, templateSelector){
+    constructor(cardData, templateSelector, { handleCardClick }){
         this._title = cardData.name;
         this._image = cardData.link;
         this._template = templateSelector;
+        this._handleCardClick = handleCardClick;
     }
 
 //Private Method
@@ -37,7 +36,7 @@ export class Card{
 //Private Method
     _setEventListeners(evt){
         this._findImageElement().addEventListener('click', () => {
-            openPlaceElement(this._title, this._image);
+            this._handleCardClick()
         });
         
         this._element.querySelector('.elements__like-button').addEventListener('click', () => {
