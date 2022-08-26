@@ -12,6 +12,8 @@ import { config,
         formEditProfile,
         formAddCard} from "./utils/constants.js";
 
+import '../pages/index.css';
+
 //Validation Initializing
 const formSelectors = [formEditProfile.id, formAddCard.id];
 const editFormValidator = new FormValidator(config, formSelectors[0]);
