@@ -1,20 +1,15 @@
-// import { Card } from "./Card.js";
-// import { element } from "./utils/constants.js";
-// import { initialCards } from "./cards.js";
-
 export class Section{
-    constructor({ data, renderer }, containerSelector){
-        this._cardInfo = data;
+    constructor({ renderer }, containerSelector){
         this._renderCard = renderer;
-        this._containerSelector = document.querySelector(containerSelector);;
+        this._container = document.querySelector(containerSelector);;
     }
 
-    renderItem(){
-        this._cardInfo.forEach(item => this._renderCard(item));    
+    renderItem(cardInfo){
+        cardInfo.forEach(item => this._renderCard(item));    
     }
 
     addItem(card){
-        this._containerSelector.prepend(card);
+        this._container.prepend(card);
     }
 
 }

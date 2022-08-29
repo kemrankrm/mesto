@@ -11,4 +11,4 @@ function openPlaceElement(title, link){
 }
 
 // Exporting the data
-export {imagePopup, bigImage, citeImage, openPlaceElement}
+export {imagePopup, bigImage, citeImage, openPlaceElement, creatCardElement}

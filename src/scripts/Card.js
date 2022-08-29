@@ -25,6 +25,7 @@ export class Card{
 //Private Method
     _handleCardRemove(){
         this._element.remove();
+        this._element = null;
     }
 
 //Private Method
@@ -53,8 +54,9 @@ export class Card{
     generateCard(){
         this._element = this._getTemplate();
 
-        this._findImageElement().setAttribute('src', this._image);
-        this._findImageElement().setAttribute('alt', this._title);
+        const image = this._findImageElement();
+        image.setAttribute('src', this._image);
+        image.setAttribute('alt', this._title);
         this._element.querySelector('.elements__name').textContent = this._title;
 
         this._setEventListeners();

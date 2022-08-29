@@ -52,10 +52,12 @@ export class FormValidator{
     _setEventListeners(formElement){
         const inputs = this._setFormElements().input;
         const buttonElement = formElement.querySelector(this._submitButtonSelector);
-    
-     
-        // this.toggleButtonState(this._hasInvalidInputs(inputs), buttonElement);
-    
+
+        inputs.forEach(input => {
+                this._checkValidity(input, formElement);
+                this.toggleButtonState(this._hasInvalidInputs(inputs), buttonElement);
+            });
+        
         inputs.forEach(input => {
             input.addEventListener('input', () => {
                 this._checkValidity(input, formElement);
@@ -81,6 +83,6 @@ export class FormValidator{
 
 //Public Method
     enableValidation(){
-        this._setEventListeners(this._setFormElements().form); //setEventListeners()
+        this._setEventListeners(this._setFormElements().form);
     }
 }
