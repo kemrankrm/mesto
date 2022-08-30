@@ -22,38 +22,37 @@ const addFormValidator = new FormValidator(config, formSelectors[1]);
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
 
-
+const profInfo= new UserInfo('.profile__name', '.profile__description');
 const openImagePopup = new PopupWithImage('.popup_type_image');
+openImagePopup.setEventListeners()
 
 const addPlaceForm = new PopupWithForm('.popup_type_new-place', {
     submitter: (data) => {
         newCard.renderItem([data]);
         addPlaceForm.close();
         document.forms.addForm.reset();
-        addFormValidator.enableValidation();
+        addFormValidator.toggleButtonState(true, addFormValidator._submitButton);
     }
 });
 addPlaceForm.setEventListeners();
 
 const editForm = new PopupWithForm('.popup_type_profile-edit', {
     submitter: (data) => {
-        const userInfo = new UserInfo('.profile__name', '.profile__description');
-        userInfo.setUserInfo(data);
+        profInfo.setUserInfo(data);
         editForm.close();
-        editFormValidator.enableValidation();
     }
 });
 editForm.setEventListeners();
 
 // Event Listeners
 editButton.addEventListener('click', () => {
-    const profInfo= new UserInfo('.profile__name', '.profile__description');
     const profInfoCont = profInfo.getUserInfo();
    
     nameInput.value = profInfoCont.name;
     jobInput.value = profInfoCont.description;
-    editFormValidator.enableValidation();
+    editFormValidator.toggleButtonState(false, editFormValidator._submitButton);
     editFormValidator.clearValidationErrors();
+
     editForm.open();
 });
 
@@ -67,7 +66,6 @@ function creatCardElement(cardData){
     const card = new Card(cardData, '#element-template', {
         handleCardClick: () => {
             openImagePopup.open(cardData.name, cardData.link);
-            openImagePopup.setEventListeners()
         }
     });
 

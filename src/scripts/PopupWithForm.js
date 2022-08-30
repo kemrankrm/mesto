@@ -5,6 +5,7 @@ export class PopupWithForm extends Popup{
         super(popupSelector);
         this._submitter = submitter;
         this._inputArray = Array.from(this._popup.querySelectorAll('input'));
+        this._popupForm = this._popup.querySelector('.popup__form');
     }
 
     _getInputValue(){
@@ -21,8 +22,7 @@ export class PopupWithForm extends Popup{
 
     close(){
         super.close();
-        this._popup.querySelector('.popup__form').reset();
-        document.removeEventListener('keydown', () => this._handleEscClose(), true);
+        this._popupForm.reset();
     }
 
     setEventListeners(){

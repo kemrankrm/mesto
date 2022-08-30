@@ -20,6 +20,8 @@ export class Card{
 //Private Method
     _handleCardLike(){
         this._element.querySelector('.elements__like-button').classList.toggle('elements__like-button_active');
+        //Тут ищется кнопка лайка каждый раз, так как карточка хранится в this._element
+        //Они все индивидуальны, так что на данном этапе я думаю это одно из достаточно рациональных способов.
     }
 
 //Private Method

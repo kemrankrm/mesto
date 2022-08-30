@@ -7,6 +7,9 @@ export class FormValidator{
         this._inputErrorClass = data.inputErrorClass;
         this._errorClass = data.errorClass;
         this._activeErrorClass = data.activeErrorClass;
+        this._formElements = document.querySelector(`#${this._formSelector}`);
+        this._inputElements = Array.from(this._formElements.querySelectorAll(this._inputSelector));
+        this._submitButton = this._formElements.querySelector(this._submitButtonSelector);
 
     }
 
@@ -50,39 +53,29 @@ export class FormValidator{
     };
 
     _setEventListeners(formElement){
-        const inputs = this._setFormElements().input;
         const buttonElement = formElement.querySelector(this._submitButtonSelector);
-
-        inputs.forEach(input => {
+        this._inputElements.forEach(input => {
                 this._checkValidity(input, formElement);
-                this.toggleButtonState(this._hasInvalidInputs(inputs), buttonElement);
+                this.toggleButtonState(this._hasInvalidInputs(this._inputElements), buttonElement);
             });
         
-        inputs.forEach(input => {
+        this._inputElements.forEach(input => {
             input.addEventListener('input', () => {
                 this._checkValidity(input, formElement);
-                this.toggleButtonState(this._hasInvalidInputs(inputs), buttonElement);})
+                this.toggleButtonState(this._hasInvalidInputs(this._inputElements), buttonElement);})
             });
-    }
-
-    _setFormElements(){
-        const formElements = document.querySelector(`#${this._formSelector}`);
-        const inputs = Array.from(formElements.querySelectorAll(this._inputSelector));
-
-        return {input: inputs,
-                form: formElements}
     }
 
 //Public Method
     clearValidationErrors(){
-        this._setFormElements().input
+        this._inputElements
         .forEach(input => {
-            this._hideErrorMesage(input, this._setFormElements().form)
+            this._hideErrorMesage(input, this._formElements);
         });
     }
 
 //Public Method
     enableValidation(){
-        this._setEventListeners(this._setFormElements().form);
+        this._setEventListeners(this._formElements);
     }
 }
