@@ -31,7 +31,7 @@ const addPlaceForm = new PopupWithForm('.popup_type_new-place', {
         newCard.renderItem([data]);
         addPlaceForm.close();
         document.forms.addForm.reset();
-        addFormValidator.toggleButtonState(true, addFormValidator._submitButton);
+        addFormValidator.toggleButtonState();
     }
 });
 addPlaceForm.setEventListeners();
@@ -50,7 +50,7 @@ editButton.addEventListener('click', () => {
    
     nameInput.value = profInfoCont.name;
     jobInput.value = profInfoCont.description;
-    editFormValidator.toggleButtonState(false, editFormValidator._submitButton);
+    editFormValidator.toggleButtonState();
     editFormValidator.clearValidationErrors();
 
     editForm.open();
