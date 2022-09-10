@@ -10,7 +10,6 @@ export class PopupWithForm extends Popup{
 
     _getInputValue(){
         const formData = {};
-
         this._inputArray.forEach((item) => {
             if(item.name !== 'button'){
                 formData[item.name] = item.value;
@@ -31,6 +30,7 @@ export class PopupWithForm extends Popup{
         
         form.addEventListener('submit', (evt) => {
             evt.preventDefault();
+            console.log(evt)
             this._submitter(this._getInputValue());
         })
     }

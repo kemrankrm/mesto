@@ -13,7 +13,7 @@
     
 }
 
-.popup__error:last-of-type{
+.popup__error:nth-last-of-type(2){
     top: 200px;
 }
 

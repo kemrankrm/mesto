@@ -10,9 +10,11 @@ export class Popup{
         }
     }
 
-    open(){
+    open(el, id){
         this._popup.classList.add('popup_open');
         document.addEventListener('keydown', this._handleEsc);
+        this._cardElement = el;
+        this._cardId = id;
     }
 
     close(){

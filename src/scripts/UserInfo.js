@@ -13,6 +13,6 @@ export class UserInfo{
 
     setUserInfo(inputData){
         this._name.textContent = inputData.name;
-        this._description.textContent = inputData.job;
+        this._description.textContent = inputData.about;
     }
 }
