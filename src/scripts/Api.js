@@ -21,6 +21,8 @@ export class Api {
                     return Promise.reject(`Ошибка ${res.status}`)
                 }
             })
+            .catch((err) => {
+                console.log(err)})
     }
 
     //GETTING USER INFORMATION
@@ -35,6 +37,8 @@ export class Api {
                     return Promise.reject(`Ошбика ${res.status}`)
                 }
             })
+            .catch((err) => {
+                console.log(err)})
 
     }
   
@@ -49,7 +53,9 @@ export class Api {
             } else {
                 return Promise.reject(`Ошибка ${res.status}`);
             }
-        });   
+        })
+        .catch((err) => {
+            console.log(err)});   
     }
 
     //USER INFORMATION POSTING
@@ -69,6 +75,8 @@ export class Api {
                         return Promise.reject(`Ошибка ${res.status}`)
                     }
                 })
+                .catch((err) => {
+                    console.log(err)})
     }
 
     postNewCard(inputData){
@@ -87,6 +95,8 @@ export class Api {
                     return Promise.reject(`Ошибка ${res.status}`)
                 }
             })
+            .catch((err) => {
+                console.log(err)})
     }
 
     removeCard(cardId){
@@ -101,6 +111,8 @@ export class Api {
                     return Promise.reject(`Ошибка ${res.status}`)
                 }
             })
+            .catch((err) => {
+                console.log(err)})
     }
 
     getLikeArr(){
@@ -113,7 +125,9 @@ export class Api {
             } else {
                 return Promise.reject(`Ошибка ${res.status}`);
             }
-        });
+        })
+        .catch((err) => {
+            console.log(err)});
     }
 
     putLike(cardId){
@@ -131,7 +145,9 @@ export class Api {
                 } else {
                     return Promise.reject(`Ошибка ${res.status}`);
                 }
-            });
+            })
+            .catch((err) => {
+                console.log(err)});
     }
 
 
@@ -147,6 +163,8 @@ export class Api {
                     return Promise.reject(`Ошибка ${res.status}`)
                 }
             })
+            .catch((err) => {
+                console.log(err)})
     }
 
 }
