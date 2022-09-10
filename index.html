@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" type="text/css" href="./pages/index.css"> -->
+    <title>mesto</title>
+<script defer src="main.js"></script><link href="main.css" rel="stylesheet"></head>
+<body>
+    <div class="page">
+        <header class="header">
+            <img src="03b78ada3425e9132ff3.svg" class="header__logo" alt="логотип">
+        </header>
+
+        <main class="main">
+            <section class="profile">
+                <div class="profile__avatar-container">
+                    <img class="profile__avatar" src="c15cb08ab8ecfaba54c6.jpg" alt="аватар">
+                    <img class="profile__avatar-edit-button" src="a086f758840ae814ecde.svg" alt="Иконка редактирования аватарки">
+                    <div class="profile__overlay"></div>
+                </div>
+                <div class="profile__info">
+                    <div class="profile__name-button-container">
+                        <h2 class = profile__name></h2>
+                        <button class="profile__edit-button" type="button"></button>
+                    </div>
+                    <h3 class="profile__description"></h3>
+                </div>
+                <button class="profile__add-button" type="button"></button>
+            </section>
+
+            <section class="elements">
+            </section>
+        </main>
+        
+        <footer class="footer">
+            <p class="footer__text">© 2020 Mesto Russia</p>
+        </footer>
+
+        <div class="popup popup_type_edit-avatar" id="popup-ea">
+            <div class="popup__container">
+                <button class="popup__close-button" type="button" id="ea-close"></button> 
+                <form class="popup__form popup__form_type_edit-avatar" name="avatarForm" id="avatar-form" novalidate>
+                    <h2 class="popup__text">Обновить аватар</h2>
+                    <fieldset class="popup__input-container">
+                        <input type="url" id="url-input" name="link" class="popup__input popup__input_type_avatar-url" placeholder="Ссылка на картинку" value="" required>
+                        <span class="popup__error_type_avatar popup__url-input-error" id="avatar-url-error"></span>
+                        <input type="submit" name="button" class="popup__submit-button" value="Сохранить" id="ea-submit">
+                    </fieldset>
+                </form>
+            </div>
+            <div class="popup__overlay"></div>
+        </div>
+
+        <div class="popup popup_type_remove" id="popup-rc">
+            <div class="popup__container">
+                <button class="popup__close-button" type="button" id="rc-close"></button> 
+                <form class="popup__form popup__form_type_remove" name="removeCard" id="remove-form" novalidate>
+                    <h2 class="popup__text">Вы уверенны?</h2>
+                    <fieldset class="popup__input-container">
+                        <input type="submit" name="button" class="popup__submit-button" value="Да, я хочу удалить" id="rc-remove">
+                    </fieldset>
+                </form>
+            </div>
+            <div class="popup__overlay"></div>
+        </div>
+
+        <div class="popup popup_type_profile-edit" id="popup-ep">
+            <div class="popup__container">
+                <button class="popup__close-button" type="button" id="pup-close"></button> 
+                <form class="popup__form popup__form_type_profile-edit" name="editForm" id="edit-form" novalidate>
+                    <h2 class="popup__text">Редактировать профиль</h2>
+                    <fieldset class="popup__input-container">
+                        <input type="text" id="name-input" name="name" class="popup__input popup__input_type_name" placeholder="Введите имя" value="Жак-Ив Кусто" minlength="2" maxlength="40" required>
+                        <span class="popup__name-input-error"></span>
+                        <input type="text" id="job-input" name="job" class="popup__input popup__input_type_job" placeholder="Введите профессию" value="Иследователь" minlength="2" maxlength="200" required>
+                        <span class="popup__job-input-error"></span>
+                        <input type="submit" name="button" class="popup__submit-button" value="Сохранить">
+                    </fieldset>
+                </form>
+            </div>
+            <div class="popup__overlay popup__overlay_type_edit"></div>
+        </div>
+
+        <div class="popup popup_type_new-place" id="popup-np">
+            <div class="popup__container">
+                <button class="popup__close-button" type="button" id="np-close"></button> 
+                <form class="popup__form popup__form_type_new-place" name="addForm" id="add-form" novalidate>
+                    <h2 class="popup__text">Новое место</h2>
+                    <fieldset class="popup__input-container">
+                        <input type="text" id="place-name" name="name" class="popup__input popup__input_type_place-name" placeholder="Название" value="" minlength="2" maxlength="30" required>
+                        <span class="popup__place-name-error"></span>
+                        <input type="url" id="url-input" name="link" class="popup__input popup__input_type_image-url" placeholder="Ссылка на картинку" value="" required>
+                        <span class="popup__url-input-error"></span>
+                        <input type="submit" name="button" class="popup__submit-button" value="Сохранить" id="np-submit">
+                    </fieldset>
+                </form>
+            </div>
+            <div class="popup__overlay"></div>
+        </div>
+
+        <div class='popup popup_type_image'>
+            <div class="popup__container popup__container_type_image">
+                <button class="popup__close-button" type="button" id="pi-close"></button>
+                <img class="popup__image" src="#" alt="">
+                <p class="popup__cite"></p>
+            </div>
+            <div class="popup__overlay popup__overlay_type_big-image"></div>
+        </div>
+        
+        <template id="element-template">
+            <div class="elements__element">
+                <button class="elements__remove-button" type="button"></button>
+                <div class="elements__image-container">
+                <img class="elements__image" src="./images/elbrus-image.jpg" alt="">
+                </div>
+                <div class="elements__group">
+                    <h2 class="elements__name"></h2>
+                    <div class="elements__like-container">
+                        <button class="elements__like-button" type="button" id="like-button"></button>
+                        <p class="elements__like-counter"></p>
+                    </div>
+                </div>
+            </div>
+        </template>       
+    </div>
+    <script type="module" src="./scripts/index.js"></script>
+</body>
+</html>
