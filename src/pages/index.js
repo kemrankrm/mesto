@@ -1,11 +1,11 @@
 //Importing Data
-import { Api } from "../scripts/components/Api.js";
 import { Card } from "../scripts/components/Card.js";
 import { Section } from "../scripts/components/Section.js";
 import { PopupWithForm } from "../scripts/components/PopupWithForm.js";
 import { PopupWithImage } from "../scripts/components/PopupWithImage.js"
 import { UserInfo} from "../scripts/components/UserInfo.js"
 import { FormValidator } from "../scripts/components/FormValidator.js"
+import { PopupWithSubmit } from "../scripts/components/PopupWithSubmit.js";
 
 import { config,
         editProfileButton,
@@ -97,6 +97,10 @@ const editForm = new PopupWithForm('.popup_type_profile-edit', {
 });
 editForm.setEventListeners();
 
+//REMOVE POPUP INITIALIZING
+const popupWithSubmit = new PopupWithSubmit('.popup_type_remove');
+popupWithSubmit.setEventListeners();
+
 // Event Listeners
 editAvatarButton.addEventListener('click', () => {
     editAvatarForm.open();
@@ -126,6 +130,41 @@ function creatCardElement(cardData){
     const card = new Card(cardData, '#element-template', ownerId, {
         handleCardClick: () => {
             openImagePopup.open(cardData.name, cardData.link);
+        },
+        handleCardLike: (cardId) => {
+            api.putLike(cardId)
+            .then(res => {
+                card._likeCounter.textContent = res.likes.length;
+                card._likes = res.likes;
+                card._likeElement.classList.add('elements__like-button_active');
+            })
+            .catch((err) => {
+                console.log(err)})
+        },
+        handleCardDislike: (cardId) => {
+            api.removeLike(cardId)
+            .then(res => {
+                card._likeElement.classList.remove('elements__like-button_active');
+                card._likeCounter.textContent = res.likes.length;
+                card._likes = res.likes;
+            })
+            .catch((err) => {
+                console.log(err)})
+        },
+        handleCardRemove: () => {
+            popupWithSubmit.open();
+            popupWithSubmit.setSubmitter(() => {
+                popupWithSubmit._submitButton.value = 'Удаление...'
+                api.removeCard(card._cardId)
+                    .then(() => {
+                        card._element.remove()
+                        popupWithSubmit.close();
+                    })
+                    .catch((err) => {console.log(err)})
+                    .finally(() => {
+                        popupWithSubmit._submitButton.value = 'Да, я хочу удалить'
+                    })
+            })
         }
     });
 

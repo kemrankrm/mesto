@@ -1,6 +1,5 @@
 import { Api } from "../components/Api.js";
-import { PopupWithForm } from "../components/PopupWithForm.js";
-import { buttonForCardRemoval } from "./constants.js";
+
 
 const imagePopup = document.querySelector('.popup_type_image');
 const bigImage = imagePopup.querySelector('.popup__image');
@@ -23,24 +22,5 @@ const api = new Api({
     }
     });
 
-//REMOVE POPUP INIT
-const removeCardPopup = new PopupWithForm('.popup_type_remove', {
-    submitter: () => {
-        buttonForCardRemoval.value = 'Удаление карточки ...'
-        api.removeCard(removeCardPopup._cardId)
-        
-
-            .then(res => {
-                removeCardPopup._cardElement.remove()
-                removeCardPopup.close();
-                buttonForCardRemoval.value = 'Да, я хочу удалить'
-                
-            })
-            .then(resJson => resJson)
-        }
-})
-
-removeCardPopup.setEventListeners();
-
 // Exporting the data
-export {imagePopup, bigImage, citeImage, openPlaceElement, api, removeCardPopup}
+export {imagePopup, bigImage, citeImage, openPlaceElement, api}

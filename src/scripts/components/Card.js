@@ -1,9 +1,9 @@
-import { api } from "../utils/utils.js";
-import { ownerId } from "../utils/constants.js";
-import { removeCardPopup } from "../utils/utils.js";
-
 export class Card{
-    constructor(cardData, templateSelector, ownerId, { handleCardClick }){
+    constructor(cardData, templateSelector, ownerId, { 
+        handleCardClick,
+        handleCardLike,
+        handleCardDislike,
+        handleCardRemove}){
         this._title = cardData.name;
         this._image = cardData.link;
         this._owner = cardData.owner._id;
@@ -12,6 +12,9 @@ export class Card{
         this._handleCardClick = handleCardClick;
         this._cardId = cardData._id;
         this._likes = cardData.likes;
+        this._likeCard = handleCardLike;
+        this._dislikeCard = handleCardDislike;
+        this._removeCard = handleCardRemove;
     }
 
 //Private Method
@@ -24,39 +27,27 @@ export class Card{
 //Private Methods
     //LIKE METHOD
     _handleCardLike(){
-        api.putLike(this._cardId)
-            .then(res => {
-                this._likeCounter.textContent = res.likes.length;
-                this._likes = res.likes;
-                this._likeElement.classList.add('elements__like-button_active');
-            })
-            .catch((err) => {
-                console.log(err)});
+        this._likeCard(this._cardId)
+            
     }
 
     //DISLIKE METHOD
     _handleCardDislike(){
-        api.removeLike(this._cardId)
-            .then(res => {
-                this._likeElement.classList.remove('elements__like-button_active');
-                this._likeCounter.textContent = res.likes.length;
-                this._likes = res.likes;
-            })
-            .catch((err) => {
-                console.log(err)})
+        this._dislikeCard(this._cardId)
+            
     }
     //IF CARD IS LIKED CHECKUP
     _isLiked(){
         return this._likes.some(item => {
             return Object.values(item).some(value => {
-                return value === ownerId
+                return value === this._ownerId
             })
         })
     }
 
 //Private Method
     _handleCardRemove(){
-        removeCardPopup.open(this._element, this._cardId);
+        this._removeCard();
     }
 
 //Private Method
