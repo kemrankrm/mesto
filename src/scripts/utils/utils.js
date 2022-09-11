@@ -1,6 +1,6 @@
-import { Api } from "../Api";
-import { PopupWithForm } from "../PopupWithForm";
-import { buttonForCardRemoval } from "./constants";
+import { Api } from "../components/Api.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { buttonForCardRemoval } from "./constants.js";
 
 const imagePopup = document.querySelector('.popup_type_image');
 const bigImage = imagePopup.querySelector('.popup__image');

@@ -7,9 +7,9 @@ export class FormValidator{
         this._inputErrorClass = data.inputErrorClass;
         this._errorClass = data.errorClass;
         this._activeErrorClass = data.activeErrorClass;
-        this._formElements = document.querySelector(`#${this._formSelector}`);
-        this._inputElements = Array.from(this._formElements.querySelectorAll(this._inputSelector));
-        this._submitButton = this._formElements.querySelector(this._submitButtonSelector);
+        this._formElement = document.querySelector(`#${this._formSelector}`);
+        this._inputElements = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+        this._submitButton = this._formElement.querySelector(this._submitButtonSelector);
 
     }
 
@@ -66,12 +66,12 @@ export class FormValidator{
     clearValidationErrors(){
         this._inputElements
         .forEach(input => {
-            this._hideErrorMesage(input, this._formElements);
+            this._hideErrorMesage(input, this._formElement);
         });
     }
 
 //Public Method
     enableValidation(){
-        this._setEventListeners(this._formElements);
+        this._setEventListeners(this._formElement);
     }
 }

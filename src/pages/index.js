@@ -1,11 +1,12 @@
 //Importing Data
-import { Api } from "./Api.js";
-import { Card } from "./Card.js";
-import { Section }from "./Section.js";
-import { PopupWithForm } from "./PopupWithForm.js";
-import { PopupWithImage } from "./PopupWithImage.js";
-import { UserInfo } from "./UserInfo.js";
-import { FormValidator } from "./FormValidator.js";
+import { Api } from "../scripts/components/Api.js";
+import { Card } from "../scripts/components/Card.js";
+import { Section } from "../scripts/components/Section.js";
+import { PopupWithForm } from "../scripts/components/PopupWithForm.js";
+import { PopupWithImage } from "../scripts/components/PopupWithImage.js"
+import { UserInfo} from "../scripts/components/UserInfo.js"
+import { FormValidator } from "../scripts/components/FormValidator.js"
+
 import { config,
         editProfileButton,
         addButton,
@@ -15,27 +16,21 @@ import { config,
         nameInput,
         jobInput,
         editAvatarButton,
-        avatarImage,
-        removePopup,
         ownerId,
         buttonForFormAddCardSubmit,
         buttonForFormEditProfileSubmit,
         buttonForAvatarEdition
-        } from "./utils/constants.js";
-import { api } from "./utils/utils.js";
+        } from "../scripts/utils/constants.js";
+import { api } from "../scripts/utils/utils.js";
 import '../pages/index.css';
 
-api.getInitialCards()
-    .then(res => {
-        newCard.renderItem(res.reverse())
-    });
-    
-api.getUserData()
-    .then((res) => {
-        document.querySelector('.profile__name').textContent = res.name;
-        document.querySelector('.profile__description').textContent = res.about;
-        document.querySelector('.profile__avatar').setAttribute('src', res.avatar);
-    });
+Promise.all([api.getInitialCards(),api.getUserData()])
+        .then(res => {
+            profInfo.setUserInfo(res[1]);
+            newCard.renderItem(res[0].reverse());
+        })
+        .catch((err) => console.log(err));    
+
 
 //Validation Initializing
 const formSelectors = [formEditProfile.id, formAddCard.id, formEditAvatar.id];
@@ -46,7 +41,7 @@ editFormValidator.enableValidation();
 addFormValidator.enableValidation();
 avatarFormValidator.enableValidation();
 
-const profInfo= new UserInfo('.profile__name', '.profile__description');
+const profInfo= new UserInfo('.profile__name', '.profile__description', '.profile__avatar');
 const openImagePopup = new PopupWithImage('.popup_type_image');
 openImagePopup.setEventListeners()
 
@@ -55,10 +50,13 @@ const editAvatarForm = new PopupWithForm('.popup_type_edit-avatar', {
         buttonForAvatarEdition.value = 'Сохранение...'
         api.upploadAvatar(data)
             .then(res => {
-                avatarImage.setAttribute('src', res.avatar);
-                document.forms.avatarForm.reset();
-                editAvatarForm.close();
-                buttonForAvatarEdition.value = 'Сохранить'
+                profInfo.setUserInfo(res);
+                editAvatarForm.close();   
+            })
+            .catch((err) => {
+                console.log(err)})
+            .finally(() => {
+                buttonForAvatarEdition.value = 'Сохранить';
             })
     }
 });
@@ -75,7 +73,6 @@ const addPlaceForm = new PopupWithForm('.popup_type_new-place', {
                         addPlaceForm.close();
                         buttonForFormAddCardSubmit.value = 'Сохранить'
                         document.forms.addForm.reset();
-                        addFormValidator.toggleButtonState();
                     })
                     .catch(err => console.log('error'));
                 
@@ -92,7 +89,9 @@ const editForm = new PopupWithForm('.popup_type_profile-edit', {
                 profInfo.setUserInfo(res);
                 editForm.close();
                 buttonForFormEditProfileSubmit.value = 'Сохранить'
-            });
+            })
+            .catch((err) => {
+                console.log(err)});
         
     }
 });
@@ -118,6 +117,7 @@ editProfileButton.addEventListener('click', () => {
 
 addButton.addEventListener('click', () => {
     addFormValidator.clearValidationErrors();
+    addFormValidator.toggleButtonState();
     addPlaceForm.open();
 });
 

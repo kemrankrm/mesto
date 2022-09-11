@@ -1,7 +1,6 @@
-import { api } from "./utils/utils";
-import { ownerId } from "./utils/constants";
-import { removeCardPopup } from "./utils/utils";
-
+import { api } from "../utils/utils.js";
+import { ownerId } from "../utils/constants.js";
+import { removeCardPopup } from "../utils/utils.js";
 
 export class Card{
     constructor(cardData, templateSelector, ownerId, { handleCardClick }){
@@ -27,26 +26,27 @@ export class Card{
     _handleCardLike(){
         api.putLike(this._cardId)
             .then(res => {
-                this._element.querySelector('.elements__like-counter').textContent = res.likes.length;
-                console.log('CARD LIKED', res)
-                this._element.querySelector('.elements__like-button').classList.add('elements__like-button_active');
-            });
-        
-        //Тут ищется кнопка лайка каждый раз, так как карточка хранится в this._element
-        //Они все индивидуальны, так что на данном этапе я думаю это одно из достаточно рациональных способов.
+                this._likeCounter.textContent = res.likes.length;
+                this._likes = res.likes;
+                this._likeElement.classList.add('elements__like-button_active');
+            })
+            .catch((err) => {
+                console.log(err)});
     }
 
     //DISLIKE METHOD
     _handleCardDislike(){
         api.removeLike(this._cardId)
             .then(res => {
-                this._element.querySelector('.elements__like-button').classList.remove('elements__like-button_active');
-                console.log('LIKE REMOVED', res);
-                this._element.querySelector('.elements__like-counter').textContent = res.likes.length;
+                this._likeElement.classList.remove('elements__like-button_active');
+                this._likeCounter.textContent = res.likes.length;
+                this._likes = res.likes;
             })
+            .catch((err) => {
+                console.log(err)})
     }
     //IF CARD IS LIKED CHECKUP
-    _handleUserLike(){
+    _isLiked(){
         return this._likes.some(item => {
             return Object.values(item).some(value => {
                 return value === ownerId
@@ -57,12 +57,6 @@ export class Card{
 //Private Method
     _handleCardRemove(){
         removeCardPopup.open(this._element, this._cardId);
-        // api.removeCard(this._cardId)
-        //     .then(res => {
-        //         this._element.remove();
-        //         this._element = null;
-                
-        //     })
     }
 
 //Private Method
@@ -77,10 +71,8 @@ export class Card{
             this._handleCardClick()
         });
         
-        this._element.querySelector('.elements__like-button').addEventListener('click', () => {
-            if(this._likes.some(item => {
-                return Object.values(item).some(value => {return value === ownerId})
-            })){
+        this._likeElement.addEventListener('click', () => {
+            if(this._isLiked()){
                 this._handleCardDislike();
             } else {
                 this._handleCardLike();
@@ -103,8 +95,7 @@ export class Card{
             this._element.querySelector('.elements__remove-button').setAttribute('style', 'visibility:hidden;');
         }
         
-        const isLiked = this._handleUserLike();
-        if(isLiked){
+        if(this._isLiked()){
             this._element.querySelector('.elements__like-button').classList.add('elements__like-button_active');
         }
 
@@ -113,6 +104,8 @@ export class Card{
         image.setAttribute('alt', this._title);
         this._element.querySelector('.elements__name').textContent = this._title;
         this._element.querySelector('.elements__like-counter').textContent = this._likes.length;
+        this._likeElement = this._element.querySelector('.elements__like-button');
+        this._likeCounter = this._element.querySelector('.elements__like-counter');
 
         this._setEventListeners();
 

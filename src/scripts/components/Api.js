@@ -15,14 +15,8 @@ export class Api {
             })
         })
             .then(res => {
-                if(res.ok){
-                    return res.json()
-                } else {
-                    return Promise.reject(`Ошибка ${res.status}`)
-                }
+                return this._checkResponse(res)
             })
-            .catch((err) => {
-                console.log(err)})
     }
 
     //GETTING USER INFORMATION
@@ -31,14 +25,8 @@ export class Api {
             headers: this._headers
         })
             .then(res => {
-                if(res.ok){
-                    return res.json()
-                } else {
-                    return Promise.reject(`Ошбика ${res.status}`)
-                }
+                return this._checkResponse(res)
             })
-            .catch((err) => {
-                console.log(err)})
 
     }
   
@@ -48,14 +36,8 @@ export class Api {
             headers: this._headers
         })
         .then(res => {
-            if(res.ok){
-                return res.json()
-            } else {
-                return Promise.reject(`Ошибка ${res.status}`);
-            }
-        })
-        .catch((err) => {
-            console.log(err)});   
+            return this._checkResponse(res);
+        });   
     }
 
     //USER INFORMATION POSTING
@@ -69,14 +51,8 @@ export class Api {
             })
             })
                 .then(res => {
-                    if(res.ok){
-                        return res.json()
-                    } else {
-                        return Promise.reject(`Ошибка ${res.status}`)
-                    }
+                    return this._checkResponse(res)
                 })
-                .catch((err) => {
-                    console.log(err)})
     }
 
     postNewCard(inputData){
@@ -89,14 +65,8 @@ export class Api {
             })
         })
             .then(res => {
-                if(res.ok){
-                    return res.json()
-                } else {
-                    return Promise.reject(`Ошибка ${res.status}`)
-                }
+                return this._checkResponse(res)
             })
-            .catch((err) => {
-                console.log(err)})
     }
 
     removeCard(cardId){
@@ -105,14 +75,8 @@ export class Api {
             headers: this._headers
         })
             .then(res => {
-                if(res.ok){
-                    return res.json()
-                } else {
-                    return Promise.reject(`Ошибка ${res.status}`)
-                }
+                return this._checkResponse(res)
             })
-            .catch((err) => {
-                console.log(err)})
     }
 
     getLikeArr(){
@@ -120,18 +84,12 @@ export class Api {
             headers: this._headers
         })
         .then(res => {
-            if(res.ok){
-                return res.json()
-            } else {
-                return Promise.reject(`Ошибка ${res.status}`);
-            }
-        })
-        .catch((err) => {
-            console.log(err)});
+            return this._checkResponse(res)
+        });
     }
 
     putLike(cardId){
-        console.log(cardId);
+        // console.log(cardId);
         return fetch(`${this._baseUrl}/cards/${cardId}/likes `, {
             method: 'PUT',
             headers: this._headers,
@@ -140,14 +98,8 @@ export class Api {
             })
         })
             .then(res => {
-                if(res.ok){
-                    return res.json()
-                } else {
-                    return Promise.reject(`Ошибка ${res.status}`);
-                }
-            })
-            .catch((err) => {
-                console.log(err)});
+                return this._checkResponse(res)
+            });
     }
 
 
@@ -157,14 +109,16 @@ export class Api {
             headers: this._headers
         })
             .then(res => {
-                if(res.ok){
-                    return res.json()
-                } else {
-                    return Promise.reject(`Ошибка ${res.status}`)
-                }
+                return this._checkResponse(res)
             })
-            .catch((err) => {
-                console.log(err)})
+    }
+
+    _checkResponse(res){
+        if(res.ok){
+            return res.json()
+        } else {
+            return Promise.reject(`Ошибка ${res.status}`)
+        }
     }
 
 }
