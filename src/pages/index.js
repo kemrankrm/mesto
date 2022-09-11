@@ -33,10 +33,9 @@ Promise.all([api.getInitialCards(),api.getUserData()])
 
 
 //Validation Initializing
-const formSelectors = [formEditProfile.id, formAddCard.id, formEditAvatar.id];
-const editFormValidator = new FormValidator(config, formSelectors[0]);
-const addFormValidator = new FormValidator(config, formSelectors[1]);
-const avatarFormValidator = new FormValidator(config, formSelectors[2]);
+const editFormValidator = new FormValidator(config, formEditProfile.id);
+const addFormValidator = new FormValidator(config, formAddCard.id);
+const avatarFormValidator = new FormValidator(config, formEditAvatar.id);
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
 avatarFormValidator.enableValidation();
@@ -71,10 +70,11 @@ const addPlaceForm = new PopupWithForm('.popup_type_new-place', {
                     .then(res => {
                         newCard.renderItem([res]);
                         addPlaceForm.close();
-                        buttonForFormAddCardSubmit.value = 'Сохранить'
-                        document.forms.addForm.reset();
+                        // buttonForFormAddCardSubmit.value = 'Сохранить'
+                        // document.forms.addForm.reset();
                     })
-                    .catch(err => console.log('error'));
+                    .catch(err => console.log('error'))
+                    .finally(() => {buttonForFormAddCardSubmit.value = 'Сохранить'});
                 
     }
 });
@@ -88,10 +88,11 @@ const editForm = new PopupWithForm('.popup_type_profile-edit', {
             .then(res => {
                 profInfo.setUserInfo(res);
                 editForm.close();
-                buttonForFormEditProfileSubmit.value = 'Сохранить'
+                // buttonForFormEditProfileSubmit.value = 'Сохранить'
             })
             .catch((err) => {
-                console.log(err)});
+                console.log(err)})
+            .finally(() => {buttonForFormEditProfileSubmit.value = 'Сохранить'});
         
     }
 });
@@ -134,9 +135,7 @@ function creatCardElement(cardData){
         handleCardLike: (cardId) => {
             api.putLike(cardId)
             .then(res => {
-                card._likeCounter.textContent = res.likes.length;
-                card._likes = res.likes;
-                card._likeElement.classList.add('elements__like-button_active');
+                card.putLike(res);
             })
             .catch((err) => {
                 console.log(err)})
@@ -144,9 +143,7 @@ function creatCardElement(cardData){
         handleCardDislike: (cardId) => {
             api.removeLike(cardId)
             .then(res => {
-                card._likeElement.classList.remove('elements__like-button_active');
-                card._likeCounter.textContent = res.likes.length;
-                card._likes = res.likes;
+                card.removeLike(res);
             })
             .catch((err) => {
                 console.log(err)})
@@ -157,7 +154,8 @@ function creatCardElement(cardData){
                 popupWithSubmit._submitButton.value = 'Удаление...'
                 api.removeCard(card._cardId)
                     .then(() => {
-                        card._element.remove()
+                        card.deleteCard();
+                        // card._element.remove()
                         popupWithSubmit.close();
                     })
                     .catch((err) => {console.log(err)})
